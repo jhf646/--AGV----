@@ -1,0 +1,1698 @@
+{
+  "coins": "689931069154100629540876703561909463953333333352904",
+  "inventory": [],
+  "equippedItems": [
+    {
+      "id": "manticore-mane",
+      "name": "Manticore Mane",
+      "value": "3500",
+      "rarity": "epic",
+      "coinsPerMinute": 4500,
+      "types": [
+        "mythical",
+        "colony"
+      ],
+      "combatStats": {
+        "attack": 1050,
+        "defense": 210,
+        "health": 2100,
+        "level": 12,
+        "experience": 2468,
+        "requiredExperience": 4156
+      },
+      "amount": 1
+    },
+    {
+      "id": "anubis-ankh",
+      "name": "Anubis' Ankh",
+      "value": "350000",
+      "rarity": "legendary",
+      "coinsPerMinute": 35000,
+      "types": [
+        "ancient"
+      ],
+      "amount": 1
+    },
+    {
+      "id": "cyber-sphinx",
+      "name": "Cyber-Sphinx Core",
+      "value": "350000",
+      "rarity": "legendary",
+      "coinsPerMinute": 100000,
+      "types": [
+        "ancient",
+        "mystical"
+      ],
+      "combatStats": {
+        "attack": 324,
+        "defense": 162,
+        "health": 396,
+        "level": 9,
+        "experience": 1741,
+        "requiredExperience": 2700
+      },
+      "amount": 1
+    },
+    {
+      "id": "nefertiti-crown",
+      "name": "Nefertiti's Crown",
+      "value": "850000",
+      "rarity": "legendary",
+      "coinsPerMinute": 65000,
+      "types": [
+        "ancient"
+      ],
+      "synergyEffect": {
+        "type": "coinGen",
+        "bonus": 0.2,
+        "condition": {
+          "type": "specificItem",
+          "value": "eye-of-horus"
+        }
+      },
+      "amount": 1
+    },
+    {
+      "id": "nano-scarab",
+      "name": "Nano-Tech Scarab",
+      "value": "450000",
+      "rarity": "epic",
+      "coinsPerMinute": 120000,
+      "types": [
+        "ancient",
+        "colony"
+      ],
+      "combatStats": {
+        "attack": 360,
+        "defense": 180,
+        "health": 450,
+        "level": 9,
+        "experience": 1045,
+        "requiredExperience": 2700
+      },
+      "synergyEffect": {
+        "type": "combat",
+        "bonus": 0.25,
+        "condition": {
+          "type": "itemType",
+          "value": [
+            "ancient",
+            "colony"
+          ],
+          "minCount": 2
+        }
+      },
+      "amount": 1
+    },
+    {
+      "id": "rosetta-fragment",
+      "name": "Rosetta Stone Fragment",
+      "value": "250000",
+      "rarity": "epic",
+      "coinsPerMinute": 30000,
+      "types": [
+        "ancient"
+      ],
+      "combatStats": {
+        "attack": 765,
+        "defense": 340,
+        "health": 1360,
+        "level": 8,
+        "experience": 2203,
+        "requiredExperience": 2262
+      },
+      "amount": 1
+    },
+    {
+      "id": "aztec-calendar",
+      "name": "Aztec Calendar Disc",
+      "value": "750000",
+      "rarity": "legendary",
+      "coinsPerMinute": 55000,
+      "types": [
+        "ancient"
+      ],
+      "amount": 1,
+      "locked": true
+    },
+    {
+      "id": "oracle-goblet",
+      "name": "Oracle's Goblet",
+      "value": "450000",
+      "rarity": "legendary",
+      "coinsPerMinute": 40000,
+      "types": [
+        "ancient"
+      ],
+      "amount": 1,
+      "locked": true
+    },
+    {
+      "id": "atlantean-pearl",
+      "name": "Atlantean Pearl",
+      "value": "500000",
+      "rarity": "legendary",
+      "coinsPerMinute": 45000,
+      "types": [
+        "ancient"
+      ],
+      "synergyEffect": {
+        "type": "coinGen",
+        "bonus": 0.4,
+        "condition": {
+          "type": "itemType",
+          "value": [
+            "ancient"
+          ],
+          "minCount": 3
+        }
+      },
+      "amount": 1,
+      "locked": true
+    },
+    {
+      "id": "techno-pharaoh",
+      "name": "Techno-Pharaoh's Crown",
+      "value": "500000",
+      "rarity": "legendary",
+      "coinsPerMinute": 50000,
+      "types": [
+        "ancient",
+        "mystical"
+      ],
+      "combatStats": {
+        "attack": 489,
+        "defense": 280,
+        "health": 700,
+        "level": 5,
+        "experience": 808,
+        "requiredExperience": 1118
+      },
+      "synergyEffect": {
+        "type": "combat",
+        "bonus": 0.3,
+        "condition": {
+          "type": "itemType",
+          "value": [
+            "ancient"
+          ],
+          "minCount": 4
+        }
+      },
+      "amount": 1
+    },
+    {
+      "id": "virtual-mummy",
+      "name": "Virtual Mummy Guardian",
+      "value": "550000",
+      "rarity": "legendary",
+      "coinsPerMinute": 150000,
+      "types": [
+        "ancient",
+        "mystdrical"
+      ],
+      "combatStats": {
+        "attack": 350,
+        "defense": 168,
+        "health": 420,
+        "level": 5,
+        "experience": 520,
+        "requiredExperience": 1118
+      },
+      "amount": 1
+    },
+    {
+      "id": "binary-obelisk",
+      "name": "Binary Obelisk Shard",
+      "value": "220000",
+      "rarity": "rare",
+      "coinsPerMinute": 10000,
+      "types": [
+        "ancient"
+      ],
+      "combatStats": {
+        "attack": 196,
+        "defense": 98,
+        "health": 251,
+        "level": 5,
+        "experience": 70,
+        "requiredExperience": 1118
+      },
+      "amount": 1
+    }
+  ],
+  "ownedPacks": [],
+  "maxEquippedItems": 12,
+  "maxPackStorage": 210,
+  "upgrades": [
+    {
+      "id": "pack-storage",
+      "name": "Pack Storage",
+      "description": "Increase maximum pack storage by 5",
+      "basePrice": 500,
+      "priceMultiplier": 1.3,
+      "level": 41,
+      "type": "storage",
+      "packId": "",
+      "increaseAmount": 5
+    },
+    {
+      "id": "equipment-slot",
+      "name": "Equipment Slot",
+      "description": "Add another equipment slot",
+      "basePrice": 5000,
+      "priceMultiplier": 3,
+      "level": 5,
+      "maxLevel": 5,
+      "type": "equipmentSlot",
+      "packId": "",
+      "increaseAmount": 1
+    },
+    {
+      "id": "equipment-slot-2",
+      "name": "Advanced Equipment Slot",
+      "description": "Add another equipment slot",
+      "basePrice": 500000,
+      "priceMultiplier": 5,
+      "level": 3,
+      "maxLevel": 3,
+      "type": "equipmentSlot",
+      "packId": "",
+      "increaseAmount": 1
+    },
+    {
+      "id": "morty-pack-limit",
+      "name": "Morty Pack Capacity",
+      "description": "Increase purchase limit of Morty Pack by 2",
+      "basePrice": 1000,
+      "priceMultiplier": 1.5,
+      "level": 47,
+      "type": "packLimit",
+      "packId": "morty-pack",
+      "increaseAmount": 2
+    },
+    {
+      "id": "morty-pack-timer",
+      "name": "Morty Pack Efficiency",
+      "description": "Reduce Morty Pack reset time by 10%",
+      "basePrice": 2000,
+      "priceMultiplier": 2,
+      "level": 9,
+      "maxLevel": 9,
+      "type": "packTimer",
+      "packId": "morty-pack",
+      "increaseAmount": 0.1
+    },
+    {
+      "id": "morty-pack-auto",
+      "name": "Morty Pack Auto-Buyer",
+      "description": "Unlock automatic purchasing for Morty Pack",
+      "basePrice": 10000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "autoBuy",
+      "packId": "morty-pack"
+    },
+    {
+      "id": "fakemon-pack-limit",
+      "name": "Fakemon Pack Capacity",
+      "description": "Increase purchase limit of Fakemon Pack by 2",
+      "basePrice": 2500,
+      "priceMultiplier": 1.5,
+      "level": 25,
+      "type": "packLimit",
+      "packId": "fakemon-pack",
+      "increaseAmount": 2
+    },
+    {
+      "id": "fakemon-pack-timer",
+      "name": "Fakemon Pack Efficiency",
+      "description": "Reduce Fakemon Pack reset time by 10%",
+      "basePrice": 5000,
+      "priceMultiplier": 2,
+      "level": 9,
+      "maxLevel": 9,
+      "type": "packTimer",
+      "packId": "fakemon-pack",
+      "increaseAmount": 0.1
+    },
+    {
+      "id": "fakemon-pack-auto",
+      "name": "Fakemon Pack Auto-Buyer",
+      "description": "Unlock automatic purchasing for Fakemon Pack",
+      "basePrice": 25000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "autoBuy",
+      "packId": "fakemon-pack"
+    },
+    {
+      "id": "mythical-pack-limit",
+      "name": "Mythical Pack Capacity",
+      "description": "Increase purchase limit of Mythical Pack by 2",
+      "basePrice": 10000,
+      "priceMultiplier": 1.5,
+      "level": 44,
+      "type": "packLimit",
+      "packId": "mythical-pack",
+      "increaseAmount": 2
+    },
+    {
+      "id": "mythical-pack-timer",
+      "name": "Mythical Pack Efficiency",
+      "description": "Reduce Mythical Pack reset time by 10%",
+      "basePrice": 20000,
+      "priceMultiplier": 2,
+      "level": 9,
+      "maxLevel": 9,
+      "type": "packTimer",
+      "packId": "mythical-pack",
+      "increaseAmount": 0.1
+    },
+    {
+      "id": "mythical-pack-auto",
+      "name": "Mythical Pack Auto-Buyer",
+      "description": "Unlock automatic purchasing for Mythical Pack",
+      "basePrice": 100000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "autoBuy",
+      "packId": "mythical-pack"
+    },
+    {
+      "id": "ancient-pack-limit",
+      "name": "Ancient Pack Capacity",
+      "description": "Increase purchase limit of Ancient Civilization Pack by 2",
+      "basePrice": 50000,
+      "priceMultiplier": 1.5,
+      "level": 16,
+      "type": "packLimit",
+      "packId": "ancient-civilization-pack",
+      "increaseAmount": 2
+    },
+    {
+      "id": "ancient-pack-timer",
+      "name": "Ancient Pack Efficiency",
+      "description": "Reduce Ancient Civilization Pack reset time by 10%",
+      "basePrice": 100000,
+      "priceMultiplier": 2,
+      "level": 9,
+      "maxLevel": 9,
+      "type": "packTimer",
+      "packId": "ancient-civilization-pack",
+      "increaseAmount": 0.1
+    },
+    {
+      "id": "ancient-pack-auto",
+      "name": "Ancient Pack Auto-Buyer",
+      "description": "Unlock automatic purchasing for Ancient Civilization Pack",
+      "basePrice": 500000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "autoBuy",
+      "packId": "ancient-civilization-pack"
+    },
+    {
+      "id": "cyber-pack-limit",
+      "name": "Cyber Pack Capacity",
+      "description": "Increase purchase limit of Cyber Temple Pack by 2",
+      "basePrice": 500000,
+      "priceMultiplier": 1.5,
+      "level": 75,
+      "type": "packLimit",
+      "packId": "cyber-template-pack",
+      "increaseAmount": 2
+    },
+    {
+      "id": "cyber-pack-timer",
+      "name": "Cyber Pack Efficiency",
+      "description": "Reduce Cyber Temple Pack reset time by 10%",
+      "basePrice": 2000000,
+      "priceMultiplier": 2,
+      "level": 9,
+      "maxLevel": 9,
+      "type": "packTimer",
+      "packId": "cyber-template-pack"
+    },
+    {
+      "id": "cyber-pack-instant",
+      "name": "Cyber Pack Instant Reset",
+      "description": "Remove time restriction completely",
+      "basePrice": 10000000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "packTimer",
+      "packId": "cyber-template-pack",
+      "requiresUpgrade": {
+        "id": "cyber-pack-timer",
+        "level": 9
+      }
+    },
+    {
+      "id": "cyber-pack-auto",
+      "name": "Cyber Pack Auto-Buyer",
+      "description": "Unlock automatic purchasing for Cyber Temple Pack",
+      "basePrice": 10000000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "autoBuy",
+      "packId": "cyber-template-pack"
+    },
+    {
+      "id": "ancient-pack-instant",
+      "name": "Ancient Pack Instant Reset",
+      "description": "Remove time restriction completely",
+      "basePrice": 5000000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "packTimer",
+      "packId": "ancient-civilization-pack",
+      "requiresUpgrade": {
+        "id": "ancient-pack-timer",
+        "level": 9
+      }
+    },
+    {
+      "id": "morty-pack-instant",
+      "name": "Morty Pack Instant Reset",
+      "description": "Remove time restriction completely",
+      "basePrice": 1000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "packTimer",
+      "packId": "morty-pack",
+      "requiresUpgrade": {
+        "id": "morty-pack-timer",
+        "level": 9
+      }
+    },
+    {
+      "id": "ancient-pack-instant",
+      "name": "Ancient Pack Instant Reset",
+      "description": "Remove time restriction completely",
+      "basePrice": 5000000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "packTimer",
+      "packId": "ancient-civilization-pack",
+      "requiresUpgrade": {
+        "id": "ancient-pack-timer",
+        "level": 9
+      }
+    },
+    {
+      "id": "cyber-pack-instant",
+      "name": "Cyber Pack Instant Reset",
+      "description": "Remove time restriction completely",
+      "basePrice": 10000000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "packTimer",
+      "packId": "cyber-template-pack",
+      "requiresUpgrade": {
+        "id": "cyber-pack-timer",
+        "level": 9
+      }
+    },
+    {
+      "id": "fakemon-pack-instant",
+      "name": "Fakemon Pack Instant Reset",
+      "description": "Remove time restriction completely",
+      "basePrice": 50000,
+      "priceMultiplier": 1,
+      "level": 1,
+      "maxLevel": 1,
+      "type": "packTimer",
+      "packId": "fakemon-pack",
+      "requiresUpgrade": {
+        "id": "fakemon-pack-timer",
+        "level": 9
+      }
+    }
+  ],
+  "discoveredItems": [
+    "mega-morty-plush",
+    "chromatic-egg",
+    "interdimensional-remote",
+    "cronenberg-sample",
+    "scuffy-plasma-pistol",
+    "math-book",
+    "meeseeks-box",
+    "squanchy-collar",
+    "portal-fluid-flask",
+    "terracottaur",
+    "embermouse",
+    "leafling",
+    "flickit",
+    "crystallus",
+    "sparkynx",
+    "pickle-experiment",
+    "portal-gun",
+    "bubbird",
+    "hydra-fang",
+    "pixie-dust",
+    "lab-coat",
+    "pyroqueen",
+    "wyvern-wing",
+    "griffin-claw",
+    "pegasus-feather",
+    "astragonia",
+    "dracelium",
+    "faun-flute",
+    "unicorn-horn",
+    "phoenix-feather",
+    "salamander-ember",
+    "dragon-scale",
+    "fairy-lantern",
+    "gorgon-hair",
+    "yeti-fur",
+    "minotaur-horn",
+    "centaur-bow",
+    "siren-shell",
+    "leprechaun-coin",
+    "sphinx-riddle-stone",
+    "manticore-mane",
+    "kelpie-horseshoe",
+    "kraken-ink",
+    "basilisk-eye",
+    "chimera-heart",
+    "djinn-lamp",
+    "mermaid-tear",
+    "ziggurat-stone",
+    "babylonian-tablet",
+    "eye-of-horus",
+    "mayan-dagger",
+    "anubis-ankh",
+    "labyrinth-key",
+    "aztec-calendar",
+    "rosetta-fragment",
+    "oracle-goblet",
+    "olmec-shard",
+    "nefertiti-crown",
+    "binary-obelisk",
+    "data-hieroglyph",
+    "quantum-processor",
+    "matrix-tablet",
+    "nano-scarab",
+    "holographic-relic",
+    "cyber-sphinx",
+    "atlantean-pearl",
+    "techno-pharaoh",
+    "virtual-mummy"
+  ],
+  "collection": [
+    {
+      "itemId": "math-book",
+      "count": 2,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.05,
+          "requirement": 10,
+          "description": "Study harder: +5% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.1,
+          "requirement": 25,
+          "description": "Knowledge is power: +10% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "interdimensional-remote",
+      "count": 1,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "scuffy-plasma-pistol",
+      "count": 2,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "meeseeks-box",
+      "count": 1,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.1,
+          "requirement": 5,
+          "description": "Can do!: +10% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.15,
+          "requirement": 10,
+          "description": "Look at me!: +15% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "portal-fluid-flask",
+      "count": 7,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "cronenberg-sample",
+      "count": 1,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "pickle-experiment",
+      "count": 5,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "squanchy-collar",
+      "count": 1,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "portal-gun",
+      "count": 1,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.15,
+          "requirement": 3,
+          "description": "Dimensional efficiency: +15% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.2,
+          "requirement": 5,
+          "description": "Infinite possibilities: +20% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "lab-coat",
+      "count": 2,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "embermouse",
+      "count": 97,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "leafling",
+      "count": 61,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "bubbird",
+      "count": 64,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "sparkynx",
+      "count": 20,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "terracottaur",
+      "count": 26,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "flickit",
+      "count": 24,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "crystallus",
+      "count": 23,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "itemValue",
+          "bonus": 0.2,
+          "requirement": 3,
+          "description": "Crystal clarity: +20% item value"
+        },
+        {
+          "type": "coinProduction",
+          "bonus": 0.12,
+          "requirement": 6,
+          "description": "Crystalline focus: +12% coin production"
+        }
+      ]
+    },
+    {
+      "itemId": "pyroqueen",
+      "count": 1,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "dracelium",
+      "count": 1,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.25,
+          "requirement": 2,
+          "description": "Dragon's might: +25% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.3,
+          "requirement": 4,
+          "description": "Dragon's hoard: +30% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "astragonia",
+      "count": 3,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.3,
+          "requirement": 1,
+          "description": "Cosmic power: +30% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.35,
+          "requirement": 2,
+          "description": "Stellar worth: +35% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "chromatic-egg",
+      "count": 1,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "mega-morty-plush",
+      "count": 1,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "dream-eater",
+      "count": 0,
+      "discovered": false,
+      "bonuses": []
+    },
+    {
+      "itemId": "galactic-portal",
+      "count": 0,
+      "discovered": false,
+      "bonuses": []
+    },
+    {
+      "itemId": "infinity-ant",
+      "count": 0,
+      "discovered": false,
+      "bonuses": []
+    },
+    {
+      "itemId": "rainbow-dracelium",
+      "count": 0,
+      "discovered": false,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.5,
+          "requirement": 1,
+          "description": "Rainbow power: +50% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.4,
+          "requirement": 2,
+          "description": "Prismatic value: +40% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "unicorn-horn",
+      "count": 54,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "phoenix-feather",
+      "count": 23,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.35,
+          "requirement": 2,
+          "description": "Eternal flame: +35% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.4,
+          "requirement": 3,
+          "description": "Rebirth riches: +40% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "dragon-scale",
+      "count": 77,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "griffin-claw",
+      "count": 212,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "manticore-mane",
+      "count": 27,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "basilisk-eye",
+      "count": 22,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "itemValue",
+          "bonus": 0.45,
+          "requirement": 2,
+          "description": "Petrifying gaze: +45% item value"
+        },
+        {
+          "type": "coinProduction",
+          "bonus": 0.38,
+          "requirement": 3,
+          "description": "Serpent wisdom: +38% coin production"
+        }
+      ]
+    },
+    {
+      "itemId": "hydra-fang",
+      "count": 51,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "pegasus-feather",
+      "count": 83,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "sphinx-riddle-stone",
+      "count": 25,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.42,
+          "requirement": 2,
+          "description": "Ancient wisdom: +42% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.48,
+          "requirement": 3,
+          "description": "Riddle master: +48% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "minotaur-horn",
+      "count": 57,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "centaur-bow",
+      "count": 56,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "mermaid-tear",
+      "count": 7,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "itemValue",
+          "bonus": 0.45,
+          "requirement": 1,
+          "description": "Ocean's blessing: +45% item value"
+        },
+        {
+          "type": "coinProduction",
+          "bonus": 0.4,
+          "requirement": 2,
+          "description": "Tidal fortune: +40% coin production"
+        }
+      ]
+    },
+    {
+      "itemId": "leprechaun-coin",
+      "count": 29,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "pixie-dust",
+      "count": 95,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "faun-flute",
+      "count": 116,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "yeti-fur",
+      "count": 75,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "kraken-ink",
+      "count": 27,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "djinn-lamp",
+      "count": 2,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "itemValue",
+          "bonus": 0.58,
+          "requirement": 1,
+          "description": "Infinite wishes: +58% item value"
+        },
+        {
+          "type": "coinProduction",
+          "bonus": 0.54,
+          "requirement": 2,
+          "description": "Magical fortune: +54% coin production"
+        }
+      ]
+    },
+    {
+      "itemId": "wyvern-wing",
+      "count": 57,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "salamander-ember",
+      "count": 95,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "chimera-heart",
+      "count": 3,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.55,
+          "requirement": 1,
+          "description": "Triple essence: +55% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.52,
+          "requirement": 2,
+          "description": "Mythical fusion: +52% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "fairy-lantern",
+      "count": 104,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "kelpie-horseshoe",
+      "count": 64,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "siren-shell",
+      "count": 57,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "gorgon-hair",
+      "count": 28,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "eye-of-horus",
+      "count": 30,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "babylonian-tablet",
+      "count": 14,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "mayan-dagger",
+      "count": 8,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "olmec-shard",
+      "count": 8,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.58,
+          "requirement": 1,
+          "description": "Ancient power: +58% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.55,
+          "requirement": 2,
+          "description": "Lost civilization: +55% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "atlantean-pearl",
+      "count": 1,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.6,
+          "requirement": 1,
+          "description": "Lost wisdom: +60% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.5,
+          "requirement": 2,
+          "description": "Ancient treasure: +50% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "rosetta-fragment",
+      "count": 9,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "anubis-ankh",
+      "count": 6,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "labyrinth-key",
+      "count": 16,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "aztec-calendar",
+      "count": 1,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "coinProduction",
+          "bonus": 0.65,
+          "requirement": 1,
+          "description": "Time mastery: +65% coin production"
+        },
+        {
+          "type": "itemValue",
+          "bonus": 0.6,
+          "requirement": 2,
+          "description": "Golden age: +60% item value"
+        }
+      ]
+    },
+    {
+      "itemId": "oracle-goblet",
+      "count": 5,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "nefertiti-crown",
+      "count": 5,
+      "discovered": true,
+      "bonuses": [
+        {
+          "type": "itemValue",
+          "bonus": 0.7,
+          "requirement": 1,
+          "description": "Royal treasury: +70% item value"
+        },
+        {
+          "type": "coinProduction",
+          "bonus": 0.62,
+          "requirement": 2,
+          "description": "Divine rule: +62% coin production"
+        }
+      ]
+    },
+    {
+      "itemId": "ziggurat-stone",
+      "count": 221,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "quantum-processor",
+      "count": 14,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "holographic-relic",
+      "count": 11,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "nano-scarab",
+      "count": 9,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "digital-ankh",
+      "count": 0,
+      "discovered": false,
+      "bonuses": []
+    },
+    {
+      "itemId": "cyber-sphinx",
+      "count": 3,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "matrix-tablet",
+      "count": 13,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "virtual-mummy",
+      "count": 2,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "data-hieroglyph",
+      "count": 97,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "techno-pharaoh",
+      "count": 2,
+      "discovered": true,
+      "bonuses": []
+    },
+    {
+      "itemId": "binary-obelisk",
+      "count": 6,
+      "discovered": true,
+      "bonuses": []
+    }
+  ],
+  "lastUpdate": 1736232092610,
+  "availablePacks": [
+    {
+      "id": "daily-pack",
+      "name": "Daily Pack",
+      "price": 0,
+      "minItems": 1,
+      "maxItems": 3,
+      "possibleItems": [
+        {
+          "itemId": "chromatic-egg",
+          "dropChance": 30
+        },
+        {
+          "itemId": "mega-morty-plush",
+          "dropChance": 30
+        },
+        {
+          "itemId": "dream-eater",
+          "dropChance": 20
+        },
+        {
+          "itemId": "galactic-portal",
+          "dropChance": 10
+        },
+        {
+          "itemId": "infinity-ant",
+          "dropChance": 9
+        },
+        {
+          "itemId": "rainbow-dracelium",
+          "dropChance": 1
+        }
+      ],
+      "purchaseLimit": {
+        "amount": 1,
+        "minutes": 1440,
+        "lastPurchaseTime": 1736229187093,
+        "remainingPurchases": 0
+      },
+      "hasAutoBuyer": false,
+      "autoBuyEnabled": false
+    },
+    {
+      "id": "morty-pack",
+      "name": "Morty Pack",
+      "price": 75,
+      "minItems": 3,
+      "maxItems": 5,
+      "possibleItems": [
+        {
+          "itemId": "math-book",
+          "dropChance": 23.33
+        },
+        {
+          "itemId": "interdimensional-remote",
+          "dropChance": 23.33
+        },
+        {
+          "itemId": "scuffy-plasma-pistol",
+          "dropChance": 23.34
+        },
+        {
+          "itemId": "meeseeks-box",
+          "dropChance": 6.67
+        },
+        {
+          "itemId": "portal-fluid-flask",
+          "dropChance": 6.67
+        },
+        {
+          "itemId": "cronenberg-sample",
+          "dropChance": 6.66
+        },
+        {
+          "itemId": "pickle-experiment",
+          "dropChance": 4
+        },
+        {
+          "itemId": "squanchy-collar",
+          "dropChance": 4
+        },
+        {
+          "itemId": "portal-gun",
+          "dropChance": 1
+        },
+        {
+          "itemId": "lab-coat",
+          "dropChance": 1
+        }
+      ],
+      "purchaseLimit": {
+        "amount": 104,
+        "minutes": 0.001814399999999999,
+        "lastPurchaseTime": 1736232092569.3186,
+        "remainingPurchases": 104
+      },
+      "hasAutoBuyer": true,
+      "autoBuyEnabled": false
+    },
+    {
+      "id": "fakemon-pack",
+      "name": "Fakemon Pack",
+      "price": 250,
+      "minItems": 2,
+      "maxItems": 4,
+      "possibleItems": [
+        {
+          "itemId": "embermouse",
+          "dropChance": 20
+        },
+        {
+          "itemId": "leafling",
+          "dropChance": 20
+        },
+        {
+          "itemId": "bubbird",
+          "dropChance": 20
+        },
+        {
+          "itemId": "sparkynx",
+          "dropChance": 8.33
+        },
+        {
+          "itemId": "terracottaur",
+          "dropChance": 8.33
+        },
+        {
+          "itemId": "flickit",
+          "dropChance": 8.34
+        },
+        {
+          "itemId": "crystallus",
+          "dropChance": 5
+        },
+        {
+          "itemId": "pyroqueen",
+          "dropChance": 1
+        },
+        {
+          "itemId": "dracelium",
+          "dropChance": 0.2
+        },
+        {
+          "itemId": "astragonia",
+          "dropChance": 0.05
+        }
+      ],
+      "purchaseLimit": {
+        "amount": 56,
+        "minutes": 0.005443199999999996,
+        "lastPurchaseTime": 1736232092464.805,
+        "remainingPurchases": 56
+      },
+      "hasAutoBuyer": true,
+      "autoBuyEnabled": false
+    },
+    {
+      "id": "mythical-pack",
+      "name": "Mythical Creatures Pack",
+      "price": 10000,
+      "minItems": 1,
+      "maxItems": 3,
+      "possibleItems": [
+        {
+          "itemId": "griffin-claw",
+          "dropChance": 8
+        },
+        {
+          "itemId": "pixie-dust",
+          "dropChance": 7
+        },
+        {
+          "itemId": "faun-flute",
+          "dropChance": 7
+        },
+        {
+          "itemId": "fairy-lantern",
+          "dropChance": 7
+        },
+        {
+          "itemId": "pegasus-feather",
+          "dropChance": 6
+        },
+        {
+          "itemId": "salamander-ember",
+          "dropChance": 6
+        },
+        {
+          "itemId": "unicorn-horn",
+          "dropChance": 5
+        },
+        {
+          "itemId": "dragon-scale",
+          "dropChance": 5
+        },
+        {
+          "itemId": "hydra-fang",
+          "dropChance": 4
+        },
+        {
+          "itemId": "minotaur-horn",
+          "dropChance": 4
+        },
+        {
+          "itemId": "centaur-bow",
+          "dropChance": 4
+        },
+        {
+          "itemId": "kelpie-horseshoe",
+          "dropChance": 4
+        },
+        {
+          "itemId": "siren-shell",
+          "dropChance": 4
+        },
+        {
+          "itemId": "wyvern-wing",
+          "dropChance": 4
+        },
+        {
+          "itemId": "yeti-fur",
+          "dropChance": 4
+        },
+        {
+          "itemId": "phoenix-feather",
+          "dropChance": 2
+        },
+        {
+          "itemId": "manticore-mane",
+          "dropChance": 2
+        },
+        {
+          "itemId": "basilisk-eye",
+          "dropChance": 2
+        },
+        {
+          "itemId": "sphinx-riddle-stone",
+          "dropChance": 2
+        },
+        {
+          "itemId": "leprechaun-coin",
+          "dropChance": 2
+        },
+        {
+          "itemId": "kraken-ink",
+          "dropChance": 2
+        },
+        {
+          "itemId": "gorgon-hair",
+          "dropChance": 2
+        },
+        {
+          "itemId": "mermaid-tear",
+          "dropChance": 0.5
+        },
+        {
+          "itemId": "djinn-lamp",
+          "dropChance": 0.3
+        },
+        {
+          "itemId": "chimera-heart",
+          "dropChance": 0.2
+        }
+      ],
+      "purchaseLimit": {
+        "amount": 91,
+        "minutes": 0.021772799999999985,
+        "lastPurchaseTime": 1736232092031.218,
+        "remainingPurchases": 91
+      },
+      "hasAutoBuyer": true,
+      "autoBuyEnabled": false
+    },
+    {
+      "id": "ancient-civilization-pack",
+      "name": "Ancient Civilization Pack",
+      "price": 100000,
+      "minItems": 1,
+      "maxItems": 3,
+      "possibleItems": [
+        {
+          "itemId": "ziggurat-stone",
+          "dropChance": 10
+        },
+        {
+          "itemId": "eye-of-horus",
+          "dropChance": 8
+        },
+        {
+          "itemId": "babylonian-tablet",
+          "dropChance": 5
+        },
+        {
+          "itemId": "mayan-dagger",
+          "dropChance": 4
+        },
+        {
+          "itemId": "rosetta-fragment",
+          "dropChance": 4
+        },
+        {
+          "itemId": "labyrinth-key",
+          "dropChance": 3
+        },
+        {
+          "itemId": "olmec-shard",
+          "dropChance": 2
+        },
+        {
+          "itemId": "anubis-ankh",
+          "dropChance": 1.5
+        },
+        {
+          "itemId": "oracle-goblet",
+          "dropChance": 1
+        },
+        {
+          "itemId": "aztec-calendar",
+          "dropChance": 0.8
+        },
+        {
+          "itemId": "nefertiti-crown",
+          "dropChance": 0.5
+        },
+        {
+          "itemId": "atlantean-pearl",
+          "dropChance": 0.2
+        }
+      ],
+      "purchaseLimit": {
+        "amount": 35,
+        "minutes": 0.021772799999999985,
+        "lastPurchaseTime": 1736232092424.3213,
+        "remainingPurchases": 35
+      },
+      "hasAutoBuyer": true,
+      "autoBuyEnabled": false
+    },
+    {
+      "id": "cyber-template-pack",
+      "name": "Cyber Temple Pack",
+      "price": 1000000,
+      "minItems": 1,
+      "maxItems": 3,
+      "possibleItems": [
+        {
+          "itemId": "data-hieroglyph",
+          "dropChance": 15
+        },
+        {
+          "itemId": "matrix-tablet",
+          "dropChance": 10
+        },
+        {
+          "itemId": "holographic-relic",
+          "dropChance": 8
+        },
+        {
+          "itemId": "quantum-processor",
+          "dropChance": 6
+        },
+        {
+          "itemId": "binary-obelisk",
+          "dropChance": 5
+        },
+        {
+          "itemId": "nano-scarab",
+          "dropChance": 3
+        },
+        {
+          "itemId": "cyber-sphinx",
+          "dropChance": 3
+        },
+        {
+          "itemId": "digital-ankh",
+          "dropChance": 0.1
+        },
+        {
+          "itemId": "techno-pharaoh",
+          "dropChance": 0.5
+        },
+        {
+          "itemId": "virtual-mummy",
+          "dropChance": 0.4
+        }
+      ],
+      "purchaseLimit": {
+        "amount": 153,
+        "minutes": 60,
+        "lastPurchaseTime": 1736231075350,
+        "remainingPurchases": 0
+      },
+      "hasAutoBuyer": true,
+      "autoBuyEnabled": false
+    }
+  ],
+  "settings": {
+    "showAnimations": false
+  },
+  "hasPerformedFirstAction": true,
+  "lastBackupReminder": 1736230532415,
+  "hasOpenedFirstPack": true,
+  "totalPacksOpened": 3184,
+  "totalDailyPacksOpened": 1,
+  "totalCoinsEarned": "431024011.35286334590761073953333333352904",
+  "bossData": {
+    "currentBoss": {
+      "id": 13,
+      "name": "Boss 13",
+      "health": 10088,
+      "maxHealth": 12974,
+      "attack": 1297,
+      "defense": 648,
+      "rewards": {
+        "coins": 10552,
+        "experience": 542
+      }
+    },
+    "highestBossDefeated": 13,
+    "selectedBossLevel": 13,
+    "autoProgress": false,
+    "currentPlayerHealth": 5776
+  }
+}

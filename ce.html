@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Grid with Dynamic Color and Animation</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <button id="changeColorBtn">Change Color</button>
+
+    <script>
+        // 获取canvas元素并设置上下文
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 定义颜色变量
+        let currentColor = 'rgba(154, 224, 223, 1)';
+
+        // 定义全局变量
+        const axisLength = canvas.width; // 坐标轴的长度，与canvas宽度相同
+        const axisWidth = 2; // 坐标轴的宽度
+        const gridSize = axisLength / 6; // 每个小格的大小
+        const squareSize = 30; // 交叉点处小正方形的边长
+
+        // 绘制坐标轴和网格
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制水平线
+            for (let i = 0; i <= 6; i++) {
+                ctx.beginPath();
+                ctx.moveTo(axisWidth, i * gridSize);
+                ctx.lineTo(axisLength, i * gridSize);
+                ctx.strokeStyle = 'gray'; // 网格线颜色
+                ctx.stroke();
+            }
+
+            // 绘制垂直线
+            for (let j = 0; j <= 6; j++) {
+                ctx.beginPath();
+                ctx.moveTo(j * gridSize, axisWidth);
+                ctx.lineTo(j * gridSize, axisLength);
+                ctx.strokeStyle = 'gray'; // 网格线颜色
+                ctx.stroke();
+            }
+
+            // 绘制交叉点处的小正方形
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    ctx.beginPath();
+                    ctx.rect(j * gridSize + gridSize - squareSize / 2, i * gridSize + gridSize - squareSize / 2, squareSize, squareSize);
+                    ctx.fillStyle = currentColor; // 使用当前颜色变量
+                    ctx.fill();
+                    ctx.strokeStyle = 'gray'; // 设置小正方形的边框颜色
+                    ctx.stroke();
+
+                    // 计算文本位置
+                    const textX = j * gridSize + gridSize - ctx.measureText(`${i + 1},${j + 1}`).width / 2;
+                    const textY = i * gridSize + gridSize + 6; // 稍微偏移以确保文本不在正方形内部
+
+                    // 绘制文本
+                    ctx.fillStyle = 'black'; // 设置文本颜色
+                    ctx.font = '12px Arial'; // 设置字体和大小
+                    ctx.fillText(`${i + 1},${j + 1}`, textX, textY);
+                }
+            }
+        }
+
+        // 改变颜色的函数
+        function changeColor() {
+            // 动态生成新的颜色值，例如随机颜色
+            const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`;
+            currentColor = randomColor;
+            drawGrid(); // 重新绘制以应用新颜色
+        }
+
+        // 设置事件监听器
+        document.getElementById('changeColorBtn').addEventListener('click', changeColor);
+
+        // 动画函数
+        function animateSquares() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+
+            // 绘制带有动画效果的正方形（此部分可以根据需要进一步调整或移除）
+            const animatedSquare = [1, 2]; // 要动画化的正方形位置
+            const animatedSquareSize = 50; // 放大后的正方形尺寸
+            const animationFrame = Date.now() % 1000; // 用于产生动画效果的简单帧计数器
+            const animationColor = `rgba(200, 200, 0, ${(1 + Math.sin(animationFrame / 500)) / 2})`; // 随时间变化的颜色，模拟发光效果
+
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+
+                    if (i + 1 === animatedSquare[0] && j + 1 === animatedSquare[1]) {
+
+                        ctx.beginPath();
+                        const size = animatedSquareSize;
+                        ctx.rect(j * gridSize + gridSize - size / 2, i * gridSize + gridSize - size / 2, size, size);
+                        ctx.fillStyle = animationColor; // 使用动画颜色填充正方形
+                        ctx.fill();
+                        ctx.strokeStyle = 'gray';
+                        ctx.stroke();
+                    }else {
+
+                    }
+
+                    // ctx.beginPath();
+                    // const size = (i + 1 === animatedSquare[0] && j + 1 === animatedSquare[1]) ? animatedSquareSize : squareSize;
+                    // const color = (i + 1 === animatedSquare[0] && j + 1 === animatedSquare[1]) ? animationColor : currentColor;
+                    // ctx.rect(j * gridSize + gridSize - size / 2, i * gridSize + gridSize - size / 2, size, size);
+                    // ctx.fillStyle = color;
+                    // ctx.fill();
+                    // ctx.strokeStyle = 'gray';
+                    // ctx.stroke();
+                }
+            }
+
+            requestAnimationFrame(animateSquares); // 保持动画循环
+        }
+
+        // 初始化画布并启动动画
+        drawGrid();
+        animateSquares();
+    </script>
+</body>
+</html>

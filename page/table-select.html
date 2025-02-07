@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AGV调度测试</title>
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            text-align: center;
+        }
+
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+
+            <div class="layui-row">
+                <div class="layui-col-xs6">
+
+                    <blockquote class="layui-elem-quote">
+                        海康机器人(AGV)坐标实时更新
+                    </blockquote>
+
+                    <form class="layui-form" action="" style="padding:20px;">
+                        <!-- 
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">电量：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="BatteryLevel">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                        </div> -->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">X：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="x">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">Y：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="y">
+                            </div>
+                        </div>
+
+                        
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">旋转角度：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="z">
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!-- 假设页面上有一个用于显示输出的div -->
+                    <div id="output"></div>
+                    <div id="remote" style="height: 800px; display: none;"></div>
+
+                    <blockquote class="layui-elem-quote">
+                        海康机器人(AGV)调度/取送
+                        <P style="color: #941010;">必须在没有上线任务的前提下操作</P>
+                    </blockquote>
+
+                    <form class="layui-form" action="" style="padding:20px;">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">设备号：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="robot" value="3005" readonly>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">执行编号：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="taskTyp" value="CE1000" readonly>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">执行编号就是任务动作类型编号</div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">起始位：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="start">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">目的地：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="end">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label"></label>
+                            <div class="layui-input-inline">
+                                <input type="button" class="layui-btn layui-btn-sm  KS" id="return_parent" value="开始执行">
+                                <!-- <input type="button" class="layui-btn layui-btn-sm  JX" id="return_parent" value="继续执行"> -->
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+                <div class="layui-col-xs6">
+                    <canvas id="myCanvas" width="600" height="600"></canvas>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+    <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script src="../js/api/http.js" charset="utf-8"></script>
+    <script>
+        // 获取canvas元素并设置上下文
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+
+        // 获取画布的宽度和高度
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+
+        // 将原点移动到画布的左下角，并翻转y轴
+        // ctx.translate(0, canvasHeight);
+        // ctx.scale(1, -1);
+
+        // 保存当前的Canvas状态
+        // ctx.save();
+        // 将原点移动到画布的左下角，并翻转y轴
+        const centerX = canvasWidth / 2;
+        const centerY = canvasHeight / 2;
+
+        // // 平移到中心点
+        ctx.translate(0, canvasHeight);
+
+        // // 旋转90度（顺时针，即向左旋转）
+
+        ctx.rotate((270) * Math.PI / 180);
+        // 恢复Canvas到之前保存的状态
+        // ctx.restore();
+        // 定义颜色变量
+        let currentColor = 'rgba(154, 224, 223, 1)';
+
+        // 定义全局变量
+        const axisLength = canvas.width; // 坐标轴的长度，与canvas宽度相同
+        const axisWidth = 2; // 坐标轴的宽度
+        const gridSize = axisLength / 6; // 每个小格的大小
+        const squareSize = 30; // 交叉点处小正方形的边长
+
+        // // 绘制坐标轴和网格
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制水平线
+            for (let i = 0; i <= 6; i++) {
+                ctx.beginPath();
+                ctx.moveTo(axisWidth, i * gridSize);
+                ctx.lineTo(axisLength, i * gridSize);
+                ctx.strokeStyle = 'gray'; // 网格线颜色
+                ctx.stroke();
+            }
+
+            // 绘制垂直线
+            for (let j = 0; j <= 6; j++) {
+                ctx.beginPath();
+                ctx.moveTo(j * gridSize, axisWidth);
+                ctx.lineTo(j * gridSize, axisLength);
+                ctx.strokeStyle = 'gray'; // 网格线颜色
+                ctx.stroke();
+            }
+
+            // 保存当前的变换矩阵
+            ctx.save();
+            // 绘制交叉点处的小正方形
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+
+
+
+
+
+                    ctx.beginPath();
+                    ctx.rect(j * gridSize + gridSize - squareSize / 2, i * gridSize + gridSize - squareSize / 2, squareSize, squareSize);
+                    ctx.fillStyle = currentColor; // 使用当前颜色变量
+                    ctx.fill();
+                    ctx.strokeStyle = 'gray'; // 设置小正方形的边框颜色
+                    ctx.stroke();
+
+                    // 计算文本位置
+                    const textX = j * gridSize + gridSize - ctx.measureText(`${i + 1},${j + 1}`).width / 2;
+                    const textY = i * gridSize + gridSize + 6; // 稍微偏移以确保文本不在正方形内部
+
+                    // 绘制文本
+                    ctx.fillStyle = 'black'; // 设置文本颜色
+                    ctx.font = '12px Arial'; // 设置字体和大小
+                    ctx.fillText(`${i + 1},${j + 1}`, textX, textY);
+
+
+                }
+            }
+            // 恢复变换矩阵
+            ctx.restore();
+        }
+
+
+        // 改变颜色的函数
+        function changeColor() {
+            // 动态生成新的颜色值，例如随机颜色
+            const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`;
+            currentColor = randomColor;
+            drawGrid(); // 重新绘制以应用新颜色
+        }
+
+        // 设置事件监听器
+        // document.getElementById('changeColorBtn').addEventListener('click', changeColor);
+
+        // 动画函数
+        // function animateSquares(a, b) {
+        //     const animatedShape = [a, b]; // 要动画化的形状位置
+        //     const animatedShapeSize = 50; // 放大后的形状尺寸
+        //     const animationFrame = Date.now() % 1000; // 用于产生动画效果的简单帧计数器
+        //     const animationColor = `rgba(200, 200, 0, ${(1 + Math.sin(animationFrame / 500)) / 2})`; // 随时间变化的颜色，模拟发光效果
+
+        //     for (let i = 0; i < 5; i++) {
+        //         for (let j = 0; j < 5; j++) {
+        //             ctx.beginPath();
+
+        //             if (i + 1 === animatedShape[0] && j + 1 === animatedShape[1]) {
+        //                 // 绘制有一边凸起的五边形
+        //                 const centerX = j * gridSize + gridSize;
+        //                 const centerY = i * gridSize + gridSize;
+        //                 const size = animatedShapeSize;
+        //                 const bulgeSize = size / 4; // 凸起的大小
+
+        //                 // 五边形的顶点坐标
+        //                 ctx.moveTo(centerX - size / 2, centerY - size / 2);
+        //                 ctx.lineTo(centerX + size / 2, centerY - size)// 底部
+        //                 ctx.lineTo(centerX + size / 2 + bulgeSize, centerY); // 右侧凸起
+        //                 ctx.lineTo(centerX + size / 2, centerY + size)// 顶部
+        //                 ctx.lineTo(centerX - size / 2, centerY - size); // 左侧凸起
+        //                 ctx.lineTo(centerX - size / 2, centerY - size) // 回到起点
+
+        //                 ctx.fillStyle = animationColor;
+        //                 ctx.fill();
+        //                 ctx.strokeStyle = 'gray';
+        //                 ctx.stroke();
+        //             } else {
+        //                 // 绘制正方形
+        //                 // const size = squareSize;
+        //                 // ctx.rect(j * gridSize + gridSize - size / 2, i * gridSize + gridSize - size / 2, size, size);
+        //                 // ctx.fillStyle = currentColor;
+        //                 // ctx.fill();
+        //                 // ctx.strokeStyle = 'gray';
+        //                 // ctx.stroke();
+        //             }
+        //         }
+        //     }
+
+        //     requestAnimationFrame(animateSquares); // 保持动画循环
+        // }
+
+
+        function animateImages(a, b, c) {
+            // ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // drawGrid();
+
+            // 绘制带有动画效果的图片
+            const animatedImagePosition = [a, b]; // 要动画化的图片位置
+            const animationFrame = Date.now() % 1000; // 用于产生动画效果的简单帧计数器
+            const animationAlpha = (1 + Math.sin(animationFrame / 500)) / 2; // 随时间变化的透明度，模拟发光效果
+
+            const targetWidth = 50;
+            const targetHeight = 50;
+            // 遍历网格以找到要动画化的图片位置
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    if (i + 1 === animatedImagePosition[0] && j + 1 === animatedImagePosition[1]) {
+                        // 计算图片位置
+                        const x = j * gridSize + gridSize - targetWidth / 2;
+                        const y = i * gridSize + gridSize - targetHeight / 2;
+
+                        // 设置全局透明度
+                        ctx.globalAlpha = animationAlpha;
+
+                        // 保存当前的变换矩阵
+                        ctx.save();
+
+                        // 平移到图片的中心点
+                        ctx.translate(x + targetWidth / 2, y + targetHeight / 2);
+
+                        // 旋转图片，例如旋转45度  
+                        const rotationAngle = (360-(c+90)) * Math.PI / 180;
+
+                        ctx.rotate(rotationAngle); 
+
+                        // 绘制旋转并调整大小后的图片
+                        // 假设我们要将图片大小调整为原来的0.8倍
+                        const scaleFactor = 0.5;
+                        ctx.drawImage(img, -img.width / 2 * scaleFactor, -img.height / 2 * scaleFactor, img.width * scaleFactor, img.height * scaleFactor);
+
+                        // 恢复变换矩阵
+                        ctx.restore();
+
+                        // 恢复全局透明度（通常不需要，因为save和restore会恢复状态）
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+            requestAnimationFrame(animateImages); // 保持动画循环
+        }
+        // 初始化画布并启动动画
+        const img = new Image();
+        img.src = '../images/AGV-ZC.svg'; // 替换为您的图片路径
+        img.onload = function () {
+            drawGrid();
+            // animateImages(); // 开始动画
+        };
+        // drawGrid();
+        // animateSquares();
+    </script>
+    <script>
+        layui.use(['table', 'form', 'tableSelect'], function () {
+            var $ = layui.jquery,
+                table = layui.table,
+                form = layui.form,
+                tableSelect = layui.tableSelect;
+
+
+
+            //AGV坐标实时更新
+            function loadIframe() {
+                var iframe = document.createElement('iframe');
+                iframe.src = 'http://192.168.0.250:8995/AGV/3005';
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                iframe.onload = function () {
+                    try {
+                        // 尝试访问iframe的document对象
+                        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                        var xmpElements = iframeDoc.querySelectorAll('xmp.emphasis');
+                        if (xmpElements.length > 1) {
+                            var xmpElement = xmpElements[1];
+                            // 提取XML字符串
+                            var xmlString = xmpElement.textContent;
+
+                            // 创建一个DOMParser实例来解析XML字符串
+                            var parser = new DOMParser();
+                            var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+
+                            // 查找<Pos>标签
+                            var posElement = xmlDoc.getElementsByTagName('Pos')[0];
+                            if (posElement) {
+                                // 获取x和y属性值
+                                var x = posElement.getAttribute('x');
+                                var y = posElement.getAttribute('y');
+                                var z = posElement.getAttribute('dir');
+                                // 输出x和y值到控制台
+                                // console.log('x:', x);
+                                // console.log('y:', y);
+
+
+                                $("#x").val("")
+                                $("#x").val(x)
+                                $("#y").val("")
+                                $("#y").val(y)
+                                $("#z").val("")
+                                $("#z").val(z)
+
+
+
+                                // 计算1588除以100的结果
+                                let a = parseInt(x, 10) / 1000;
+
+                                // 对结果进行四舍五入取整
+                                a = Math.round(a);
+
+                                // 计算1588除以100的结果
+                                let b = parseInt(y, 10) / 1000;
+
+                                // 对结果进行四舍五入取整
+                                b = Math.round(b);
+
+                                // 计算1588除以100的结果
+                                let c = parseInt(z, 10);
+
+                                // 对结果进行四舍五入取整
+                                c = Math.round(c);
+                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                drawGrid();
+                                // drawGrid();
+                                // animateSquares(a, b);
+                                animateImages(a, b, c);
+                                // 如果需要在页面上显示这些值，可以将其添加到某个元素中
+                                // 例如，假设页面上有一个id为"output"的div
+                                // var xDiv = document.getElementById('x');
+                                // var yDiv = document.getElementById('y');
+                                // if (xDiv) {
+                                //     xDiv.innerHTML = x;
+                                // }
+                                // if (yDiv) {
+                                //     yDiv.innerHTML = y;
+                                // }
+                            } else {
+                                console.error('<Pos>标签未找到');
+                            }
+                        } else {
+                            console.error('包含XML内容的<xmp>标签未找到');
+                        }
+                    } catch (error) {
+                        console.error('无法访问iframe的DOM或解析XML内容:', error.message);
+                    }
+                };
+
+                var remoteElement = document.getElementById('remote');
+
+                // 清空 remote 元素的内容
+                while (remoteElement.firstChild) {
+                    remoteElement.removeChild(remoteElement.firstChild);
+                }
+                remoteElement.appendChild(iframe);
+            }
+
+            var timerId = setInterval(function () {
+
+                loadIframe()
+            }, 500);
+
+            //AGV调度任务生成
+            $("body").on("click", ".KS", function () {
+
+                // 获取当前时间
+                const currentDate = new Date();
+                // console.log("当前时间:", currentDate.toLocaleString());
+
+                // 获取当前时间戳
+                const timestamp = Date.now();
+                // console.log("当前时间戳:", timestamp);
+
+                var data1 = {
+                    "reqCode": timestamp + "",
+                    "reqTime": "",
+                    "clientCode": "",
+                    "tokenCode": "",
+                    "interfaceName": "genAgvSchedulingTask",
+                    "taskTyp": "CE1000",
+                    "wbCode": "",
+                    "positionCodePath": [
+                        {
+                            "positionCode": $("#start").val(),
+                            "type": "00"
+                        },
+                        {
+                            "positionCode": $("#end").val(),
+                            "type": "00"
+                        }
+                    ],
+                    "podCode": "",
+                    "podDir": "",
+                    "podTyp": "",
+                    "agvCode": "3005",
+                    "taskCode": ""
+                }
+
+
+                var settings = {
+                    "url": "http://192.168.0.250:8995/genAgvSchedulingTask/3005",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify(data1),
+                };
+
+                $.ajax(settings).done(function (response) {
+
+                    layer.msg(response, {
+                        icon: 1,
+                        offset: "auto",
+                        time: 2000
+                    });
+                    // console.log(response);
+                });
+                // $.ajax({
+
+                //     url: "http://192.168.0.250:8995/genAgvSchedulingTask/3005",
+
+                //     type: "post",
+
+                //     // dataType: 'json',
+
+                //     data: JSON.stringify(data1),
+
+                //     success: function (data) {
+                //         layer.msg("成功！", {
+                //             icon: 1,
+                //             offset: "auto",
+                //             time: 2000
+                //         });
+                //     },
+
+                //     error: function () {
+                //         layer.msg("发送服务器失败！", {
+                //             icon: 2,
+                //             offset: "auto",
+                //             time: 2000
+                //         });
+
+
+                //     }
+                // })
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>

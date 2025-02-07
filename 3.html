@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Image with Glow Effect</title>
+</head>
+<body style="text-align: center;">
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const img = new Image();
+ 
+        img.src = './images/AGV-ZC.svg'; // 替换为你的图片路径
+        img.onload = function() {
+            drawImageWithGlow();
+        };
+
+        function drawImageWithGlow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制图片
+            ctx.drawImage(img, 100, 100, img.width / 2, img.height / 2);
+
+            // 添加发光效果
+            const glowRadius = 75; // 发光半径
+            const glowAlpha = 0.5; // 发光透明度
+            const glowColor = 'rgba(255, 255, 0, ' + glowAlpha + ')'; // 发光颜色
+
+            ctx.globalAlpha = glowAlpha;
+            ctx.beginPath();
+            ctx.arc(150, 150, glowRadius, 0, Math.PI * 2, false); // 发光圆心应与图片中心对齐
+            ctx.fillStyle = glowColor;
+            ctx.fill();
+
+            ctx.globalAlpha = 1.0; // 恢复全局透明度
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=gbk">
+    <style>
+        XMP {
+            margin: 0px;
+        }
+
+        .emphasis {
+            color: red;
+            background: yellow ;
+            font-weight:bold;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="get" action="support"> <input type="text" name="robotid" value="3005" maxlength="10"
+            onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"><a
+            style="float:right;width=200px;font-size:14px;margin-right:200px;"
+            href="http://192.168.0.114:8994/rcs/task/">任务查询超链接</a><br><a
+            style="float:right;width=200px;font-size:14px;margin-right:200px;"
+            href="http://192.168.0.114:8994/rcs/pod/">货架查询超链接</a>
+        <p><input type="submit" value="查询"> </p>
+    </form>
+    <hr>
+    <div style="float:left;width:200px;font-size:14px;margin-left:80px;">
+        <h2>Robot Information</h2>
+        <xmp>
+            <?xml version="1.0" encoding="utf-8"?>
+            <INTERFACE>
+                <Version>1.0</Version>
+                <Name>get_robot_info</Name> <!--*****************小车完整信息*****************-->
+                <Robot>
+                    <XMP>
+                        <Index>3005</Index>
+                        <MapCode>XY</MapCode>
+                        <TypeCode>4</TypeCode>
+                        <Status>786432</Status>
+                        <Stay>0</Stay>
+                        <TaskId>0</TaskId>
+                        <SubTaskId>0</SubTaskId>
+                        <ActionType>199</ActionType>
+                    </xmp>
+                    <xmp class="emphasis" style="width:213px">
+                        <Target>
+                            <x>-888</x>
+                            <y>-888</y>
+                            <dir>999</dir>
+                            <PodId>0</PodId>
+                            <PodDir>-888</PodDir>
+                        </Target>
+                    </xmp>
+                    <xmp> <!--*****************小车状态信息*****************-->
+                        <StatusInfo>
+                            <TaskId>0</TaskId>
+                            <SubTaskId>255</SubTaskId>
+                            <RobotStatus>4</RobotStatus>
+                            <BatteryLevel>71</BatteryLevel> <!--信号强度-->
+                            <SignalLevel>-68</SignalLevel>
+                            <PodId>0</PodId>
+                            <PodDir>0</PodDir>
+                        </StatusInfo>
+                    </xmp>
+                    <xmp class="emphasis" style="width:213px">
+                        <Pos x="2002" y="1993" dir="180" />
+                    </xmp>
+                    <xmp> <!--直行速度-->
+                        <Velocity>0</Velocity> <!--旋转速度-->
+                        <RotVel>0</RotVel> <!--*****************路径规划库输出*****************-->
+                        <RpOutput /> <!---->
+                        <ErrorCode>0</ErrorCode> <!--地图类型：1-栅格，2-拓扑-->
+                        <AlgmType>2</AlgmType>
+                        <CommandX>2000</CommandX>
+                        <CommandY>2000</CommandY>
+                        <Dir>180</Dir>
+                        <FinishFlag>0</FinishFlag> <!--命令类型： -1-无效，0-前行，1-停止，2-后退，3-转弯-->
+                        <CmdType>0</CmdType> <!--小车最大速度-->
+                        <Vel>0</Vel> <!--传感器范围-->
+                        <Sphere>0</Sphere>
+                        <PodDir>999</PodDir>
+                        <PodRunDir>999</PodRunDir>
+                        <CrashRobot>0</CrashRobot>
+                </Robot>
+            </INTERFACE>
+        </xmp>
+    </div>
+    <div style="float:right;width=100px;font-size:14px;margin-right:80px;">
+        <h2>智能分析结果</h2>
+        <xmp></xmp>
+    </div>
+    <div style="float:right;width=200px;font-size:14px;margin-right:80px;">
+        <h2>Robot Command</h2>
+        <xmp>
+            <?xml version="1.0" encoding="utf-8"?>
+            <INTERFACE>
+                <Version>1.0</Version>
+                <Name>get_robot_command</Name>
+                <Robot> <!--*****************小车执行的命令详情*****************-->
+                    <TaskId>0</TaskId>
+                    <SubTaskId>0</SubTaskId> <!--1-暂停的任务，0-正常执行的任务-->
+                    <PauseStatus>0</PauseStatus>
+                    <target>
+                        <target_x>0</target_x>
+                        <target_y>0</target_y>
+                        <dir>0</dir>
+                        <move_type>0</move_type>
+                        <barrier_level>0</barrier_level>
+                        <max_vel>0</max_vel>
+                        <final_mission>0</final_mission>
+                    </target> <!--动作叠加在移动前，还是移动后-->
+                    <AddActionTime>0</AddActionTime> <!--发给小车的操作类型（命令）；对应attach_act联合-->
+                    <ActionType>0</ActionType>
+                </Robot>
+            </INTERFACE>
+        </xmp>
+    </div>
+</body>
+
+</html>
