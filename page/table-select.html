@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/public.css" media="all">
     <style>
         body {
-            text-align: center;
+            /* text-align: center; */
         }
 
         canvas {
@@ -74,8 +74,14 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">设备号：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
-                                    id="robot" value="3005" readonly>
+                                <!-- <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="robot" value="3005" readonly> -->
+
+
+                                <select id="robot" name="robot">
+
+
+                                </select>
                             </div>
                             <div class="layui-form-mid layui-word-aux"></div>
                         </div>
@@ -118,7 +124,7 @@
 
                     </form>
                 </div>
-                <div class="layui-col-xs6">
+                <div class="layui-col-xs6" style="text-align: center;">
                     <canvas id="myCanvas" width="700" height="700"></canvas>
                 </div>
             </div>
@@ -349,7 +355,73 @@
                 tableSelect = layui.tableSelect;
 
 
+            AGVSB()
+            //AGV设备获取
+            function AGVSB() {
+                // 获取当前时间
+                const currentDate = new Date();
+                // console.log("当前时间:", currentDate.toLocaleString());
 
+                // 获取当前时间戳
+                const timestamp = Date.now();
+                // console.log("当前时间戳:", timestamp);
+
+                var data1 = {
+
+
+                    "clientCode": "",
+                    "interfaceName": "getAgvStatus",
+                    "mapCode": "",
+                    "mapShortName": "XY",
+                    "needReqCode": "",
+                    "reqCode": timestamp + "",
+                    "reqTime": "",
+                    "robotCount": "-1",
+                    "uname": ""
+                }
+
+
+
+                $.ajax({
+                    // url: "http://192.168.0.144:80/rcs/services/rest/hikRpcService/getAgvStatus",
+                    url: "http://192.168.0.250:8995/getAgvStatus/3005",
+
+
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/xml;charset=UTF-8"
+                    },
+                    // dataType: 'json',
+
+                    data: JSON.stringify(data1),
+
+                    success: function (res) {
+
+                        layer.msg(res, function () { });
+
+                    },
+
+                    error: function (res) {
+
+                        // layer.msg(res.responseText, function () { });
+                        // console.log(res.responseText)
+                        // console.log(res.responseText)
+
+
+
+                        var select = $("#robot");//TypeID为HTML标签ID
+                        select.empty();
+                        let result = JSON.parse(res.responseText).data
+                        $.each(result, function (index, item) {
+                            // console.log(index, item)
+                            select.append(new Option(item.robotCode, item.robotCode));// 下拉菜单里添加元素
+                        });
+                        layui.form.render("select");
+                    }
+                })
+
+            }
             //AGV坐标实时更新
             function loadIframe() {
                 // 获取当前时间
@@ -400,7 +472,7 @@
 
                         // layer.msg(res.responseText, function () { });
                         // console.log(res.responseText)
-                        console.log(res.responseText)
+                        // console.log(res.responseText)
 
 
                         table.render({
@@ -415,7 +487,7 @@
                             //     "right": "0"
                             // },
                             // url: http1 + "GetUserInfoList",
-                            data:JSON.parse(res.responseText).data,
+                            data: JSON.parse(res.responseText).data,
                             // parseData: function (res) { //res 即为原始返回的数据
                             //     return {
                             //         "code": 0,
@@ -432,9 +504,9 @@
 
                             cols: [
 
-                            // {"battery":"92","direction":"180","exclude":"0","excludeStr":"正常","podCode":"","podDir":"",
-                            // "posX":"1002","posY":"5006","robotCode":"3007","robotIp":"192.168.0.123","status":"4",
-                            // "statusStr":"任务空闲","stop":"0","stopStr":"否"}
+                                // {"battery":"92","direction":"180","exclude":"0","excludeStr":"正常","podCode":"","podDir":"",
+                                // "posX":"1002","posY":"5006","robotCode":"3007","robotIp":"192.168.0.123","status":"4",
+                                // "statusStr":"任务空闲","stop":"0","stopStr":"否"}
                                 [{
                                     field: 'robotCode',
                                     width: 180,
@@ -469,6 +541,28 @@
                             // limit: 15,
                             // page: true
                         });
+
+
+                        // 清除画布（可选，根据需求决定是否在循环前清除）
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        drawGrid();
+
+                        for (var i = 0; i < JSON.parse(res.responseText).data.length; i++) {
+                            var x = JSON.parse(res.responseText).data[i].posX;
+                            var y = JSON.parse(res.responseText).data[i].posY;
+                            var z = JSON.parse(res.responseText).data[i].direction;
+                            // console.log("x:", x, "y:", y);
+
+                            // 计算并四舍五入
+                            let a = Math.round(parseInt(x, 10) / 1000);
+                            let b = Math.round(parseInt(y, 10) / 1000);
+                            let c = Math.round(parseInt(z, 10));
+
+                            // 调用函数显示图片（确保此函数能够处理多个图片的显示）
+                            animateImages(a, b, c);
+                        }
+
+
                     }
                 })
 
@@ -515,6 +609,87 @@
                 loadIframe()
             }, 500);
 
+
+            // AGV_work()
+            // var timerWork = setInterval(function () {
+
+            //     AGV_work()
+            // }, 360000);
+
+            var H = 1
+            // 自动跑任务
+            function AGV_work() {
+
+
+
+                // 获取当前时间
+                const currentDate = new Date();
+                // console.log("当前时间:", currentDate.toLocaleString());
+
+                // 获取当前时间戳
+                const timestamp = Date.now();
+                // console.log("当前时间戳:", timestamp);
+
+
+                let A= (H%2==0)? "004000XY002000":"001000XY002000"
+
+                let B= (H%2==0)? "001000XY002000":"004000XY002000"
+
+               
+
+
+                var data1 = {
+                    "reqCode": timestamp + "",
+                    "reqTime": "",
+                    "clientCode": "",
+                    "tokenCode": "",
+                    "interfaceName": "genAgvSchedulingTask",
+                    "taskTyp": "CE1000",
+                    "wbCode": "",
+                    "positionCodePath": [
+                        {
+                            
+                            // "positionCode": $("#start").val(),
+                            "positionCode": A,
+                            "type": "00"
+                        },
+                        {
+                            // "positionCode": $("#end").val(),
+                            "positionCode": B,
+                            "type": "00"
+                        }
+                    ],
+                    "podCode": "",
+                    "podDir": "",
+                    "podTyp": "",
+                    // "agvCode": $("#robot").val(),
+                    "agvCode": "3006",
+                    "taskCode": ""
+                }
+
+
+                var settings = {
+                    "url": "http://192.168.0.250:8995/genAgvSchedulingTask/3005",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify(data1),
+                };
+
+                $.ajax(settings).done(function (response) {
+
+                    H++
+                    layer.msg(response, {
+                        icon: 1,
+                        offset: "auto",
+                        time: 2000
+                    });
+                    // console.log(response);
+                });
+
+            }
             //AGV调度任务生成
             $("body").on("click", ".KS", function () {
 
@@ -547,7 +722,7 @@
                     "podCode": "",
                     "podDir": "",
                     "podTyp": "",
-                    "agvCode": "3005",
+                    "agvCode": $("#robot").val(),
                     "taskCode": ""
                 }
 
