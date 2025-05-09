@@ -1,113 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>jQuery POST Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
-    <input type="button" value="点击加载iframe" onclick="loadIframe()" />
-
-
-    <input type="button" value="获取位置" onclick="loadIframe()" />
-    <!-- 假设页面上有一个用于显示输出的div -->
-    <div id="output"></div>
-    <div id="remote" style="height: 800px; display: none;"></div>
-
     <script>
-        function loadIframe() {
-            var iframe = document.createElement('iframe');
-            iframe.src = 'http://192.168.0.250:8995/AGV/3005';
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.border = 'none';
-            iframe.onload = function () {
-                try {
-                    // 尝试访问iframe的document对象
-                    var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
-                    var xmpElements = iframeDoc.querySelectorAll('xmp.emphasis');
-                    if (xmpElements.length > 1) {
-                        var xmpElement = xmpElements[1];
-                        // 提取XML字符串
-                        var xmlString = xmpElement.textContent;
-
-                        // 创建一个DOMParser实例来解析XML字符串
-                        var parser = new DOMParser();
-                        var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-
-                        // 查找<Pos>标签
-                        var posElement = xmlDoc.getElementsByTagName('Pos')[0];
-                        if (posElement) {
-                            // 获取x和y属性值
-                            var x = posElement.getAttribute('x');
-                            var y = posElement.getAttribute('y');
-
-                            // 输出x和y值到控制台
-                            console.log('x:', x);
-                            console.log('y:', y);
-
-                            // 如果需要在页面上显示这些值，可以将其添加到某个元素中
-                            // 例如，假设页面上有一个id为"output"的div
-                            var outputDiv = document.getElementById('output');
-                            if (outputDiv) {
-                                outputDiv.innerHTML = 'x: ' + x + '<br>y: ' + y;
-                            }
-                        } else {
-                            console.error('<Pos>标签未找到');
-                        }
-                    } else {
-                        console.error('包含XML内容的<xmp>标签未找到');
-                    }
-                } catch (error) {
-                    console.error('无法访问iframe的DOM或解析XML内容:', error.message);
-                }
+        $(document).ready(function() {
+            // 准备要发送的数据
+            const postData = {
+                cmd: "KZ",
+                key: "someKey",
+                isValue: true
             };
 
-            var remoteElement = document.getElementById('remote');
-
-            // 清空 remote 元素的内容
-            while (remoteElement.firstChild) {
-                remoteElement.removeChild(remoteElement.firstChild);
-            }
-            remoteElement.appendChild(iframe);
-        }
-
-        var timerId = setInterval(function () {
-
-            loadIframe()
-        }, 1000);
-        // function loadIframe() {
-        //     var iframe = document.createElement('iframe');
-        //     iframe.src = 'http://192.168.0.250:8995/AGV/3005';
-        //     iframe.style.width = '100%';
-        //     iframe.style.height = '100%';
-        //     iframe.style.border = 'none';
-        //     iframe.onload = function () {
-        //         try {
-        //             // 尝试访问iframe的document对象
-        //             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
-        //             // 查找包含<Pos>标签的XML内容
-        //             var parser = new DOMParser();
-        //             var xmlDoc = parser.parseFromString(iframeDoc.querySelector('xmp').textContent, 'text/xml');
-
-        //             // 查找<Pos>标签并获取x和y属性值
-        //             var posElement = xmlDoc.getElementsByTagName('Pos')[0];
-        //             var x = posElement.getAttribute('x');
-        //             var y = posElement.getAttribute('y');
-
-        //             console.log('Pos标签的x属性值:', x);
-        //             console.log('Pos标签的y属性值:', y);
-        //         } catch (error) {
-        //             console.error('无法访问iframe的DOM或解析XML内容:', error);
-        //         }
-        //     };
-        //     document.getElementById('remote').appendChild(iframe);
-        // }
+            // 发送POST请求
+            $.ajax({
+                url: 'http://10.90.7.240:8011/sendCommand',  // 确保URL与服务器代码中的路由匹配
+                type: 'POST',
+                data: JSON.stringify(postData),  // 将数据转换为JSON字符串
+                contentType: 'application/json',  // 设置请求头，告诉服务器发送的是JSON格式
+                success: function(response) {
+                    console.log('Success:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
     </script>
 </body>
-
 </html>
