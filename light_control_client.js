@@ -1,27 +1,44 @@
 const net = require("net");
-const http = require("http");
-const cors = require("cors");
-const readline = require("readline");
 
-// 配置常量
-const CONFIG = {
-  HOST: "10.90.7.222",
-  PORT: 23,
-  HTTP_PORT: 8011,
-  API_PATH: "/sendCommand",
-  ALLOWED_ORIGIN: "*", // 修改为实际允许的源
-  COMMANDS: {
-    KZ: "KZ",
-    SQL: "SQL"
-  }
-};
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ port: 8089 });
+
+let tcpDataQueue = []; // 用于存储TCP客户端接收到的数据
+
+// WebSocket服务器连接事件
+wss.on("connection", (ws) => {
+  // 发送历史数据给新连接的WebSocket客户端
+  tcpDataQueue.forEach((data) => ws.send(data));
+
+  ws.on("message", (message) => {
+    console.log(`Received message from WebSocket client: ${message}`);
+  });
+});
+
+// 假设有一个函数receiveTcpData(data)用于处理TCP客户端接收到的数据
+/**
+ * 接收TCP数据并处理
+ *
+ * @param addr TCP连接地址
+ * @param data 接收到的数据
+ */
+function receiveTcpData(addr,data) {
+  const message = `Received from TCP ${addr}: ${data}`;
+  console.log(message);
+  tcpDataQueue.push(message); // 存储数据
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message); // 广播给所有连接的WebSocket客户端
+    }
+  });
+}
 
 /**
- * 计算给定Buffer的CRC16-Modbus校验码
+ * 计算Modbus CRC16校验码
  *
- * @param buffer 需要计算CRC16-Modbus校验码的Buffer
- * @returns 返回包含CRC16-Modbus校验码的Buffer
- * @throws 如果输入参数不是Buffer类型，则抛出TypeError异常
+ * @param buffer Buffer类型的数据缓冲区
+ * @returns Buffer类型，包含CRC16校验码
+ * @throws 如果输入不是Buffer类型，则抛出TypeError异常
  */
 function crc16Modbus(buffer) {
   if (!Buffer.isBuffer(buffer)) {
@@ -43,151 +60,144 @@ function crc16Modbus(buffer) {
 }
 
 /**
- * 将输入的十六进制字符串进行处理，并返回一个二进制数组
+ * 处理数据函数
  *
- * @param hexString 输入的十六进制字符串
- * @returns 返回一个二进制数组，表示输入的十六进制字符串从第7位到第8位之间的二进制数值
+ * @param hexString 十六进制字符串
+ * @returns 返回二进制数组
  */
-function processData(hexString) {
-  const targetHex = hexString.slice(6, 8);
-  const binaryString = parseInt(targetHex, 16).toString(2).padStart(8, "0");
-  return Array.from(binaryString, (bit) => parseInt(bit, 10));
-}
+function processData(addr,hexString) {
+  // 提取出d1部分
+  const targetHex = hexString.slice(6, 8); // 假设d1始终位于索引6到8（不包括8）
+  console.log(`Extracted Hex: ${targetHex}`);
 
-const client = new net.Socket();
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
+  // 将d1从十六进制转换为二进制字符串
+  const binaryString = parseInt(targetHex, 16).toString(2).padStart(8, "0"); // 确保是8位二进制
+  console.log(`Binary String: ${binaryString}`);
+
+  // 将二进制字符串拆分为数组
+  const binaryArray = Array.from(binaryString, (bit) => parseInt(bit, 10));
+  console.log(`Binary Array: [${binaryArray.join(", ")}]`);
+
+  receiveTcpData(addr,binaryArray);
+  return binaryArray;
+}
+// 配置连接参数
+const clientConfigs = [
+  { host: "10.90.7.222", port: 23 },
+  { host: "10.90.7.221", port: 23 }, // 假设这是另一个服务器的地址和端口
+  // 可以根据需要添加更多的客户端配置
+];
+
+// 创建客户端管理器，用于存储多个客户端实例
+const clients = [];
+
+// 遍历客户端配置，为每个配置创建一个新的客户端实例
+clientConfigs.forEach((config) => {
+  const client = new net.Socket();
+  clients.push({ client, config });
+
+  // 连接到服务器
+  client.connect(config.port, config.host, () => {
+    console.log(`Connected to device at ${config.host}:${config.port}`);
+  });
+
+  // 处理来自服务器的数据
+  client.on("data", (data) => {
+    let targetHex = data.toString("hex").slice(2, 4); // 假设处理逻辑不变
+    if (targetHex === "02") {
+      processData(config.host,data.toString("hex"));
+    }
+    console.log(
+      `Received from device at ${config.host}:${config.port}:`,
+      data.toString("hex")
+    );
+    // 这里可以添加对特定客户端的响应逻辑
+  });
+
+  // 处理客户端连接关闭
+  client.on("close", () => {
+    console.log(`Connection to device at ${config.host}:${config.port} closed`);
+  });
+
+  // 处理客户端错误
+  client.on("error", (err) => {
+    console.error(
+      `Connection error to device at ${config.host}:${config.port}:`,
+      err
+    );
+  });
 });
 
-/**
- * 创建命令包
- *
- * @param key 按键编号
- * @param is 按键状态，0 表示按下，1 表示松开
- * @returns 返回创建的命令包的十六进制字符串
- */
-function createCommandPacket(key, is) {
-  const dataPacket = Buffer.from(`010500${key}${is}00`, "hex");
-  const crc = crc16Modbus(dataPacket);
-  return Buffer.concat([dataPacket, crc]).toString("hex").toUpperCase();
-
-}
-
-/**
- * 发送命令到客户端
- *
- * @param cmd 命令类型
- * @param key 地址
- * @param is 开关状态
- * @throws 如果传入的参数无效，将抛出错误
- */
-function sendCommand(cmd, key, is) {
-  if (!cmd || !key || !is) {
-    throw new Error("Invalid parameters");
-  }
+// 发送命令到设备
+function sendCommandToClient(clientInstance, cmd, key, is) {
+  // if (!clientInstance || !cmd || !key || !is) {
+  //   console.error("Invalid parameters");
+  //   return;
+  // }
 
   let command;
   switch (cmd.toUpperCase()) {
-    case CONFIG.COMMANDS.KZ:
-      command = Buffer.from(createCommandPacket(key, is), "hex");
+    case "KZ":
+      command = Buffer.from(kz(key, is), "hex");
       break;
-    case CONFIG.COMMANDS.SQL:
+    case "SQL":
       command = Buffer.from("0102000000187800", "hex");
       break;
     default:
-      throw new Error(`Unknown command: ${cmd}`);
+      console.error("Unknown command:", cmd);
+      return;
   }
-  client.write(command);
+
+  console.log(
+    `Sending ${cmd.toUpperCase()} command to ${clientInstance.config.host}:${
+      clientInstance.config.port
+    }:`,
+    command.toString("hex")
+  );
+  clientInstance.client.write(command);
 }
 
-http.createServer((req, res) => {
-  // 手动设置 CORS 头信息
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    // 预检请求，直接返回
-    res.writeHead(204);
-    res.end();
-    return;
-  }
-
-  if (req.method === "POST" && req.url === CONFIG.API_PATH) {
-    let body = "";
-    let responseSent = false;
-
-    req.on("data", (chunk) => body += chunk.toString());
-    req.on("end", () => {
-      if (responseSent) return;
-
-      try {
-        const { cmd, key, isValue } = JSON.parse(body);
-        if (!cmd || !key || isValue === undefined) {
-          throw new Error("Missing parameters");
-        }
-        sendCommand(cmd, key, isValue.toString());
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: true, message: "Command sent" }));
-      } catch (error) {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: error.message }));
-      }
-      responseSent = true;
-    });
-  } else {
-    if (!res.headersSent) {
-      res.writeHead(404).end("Not found");
-    }
-  }
-})
-.listen(CONFIG.HTTP_PORT, () => {
-  console.log(`HTTP server listening on port ${CONFIG.HTTP_PORT}`);
-});
-
-// ...（net.Socket 和 readline 相关代码保持不变）
-
-client.connect(CONFIG.PORT, CONFIG.HOST, () => {
-  console.log(`Connected to device at ${CONFIG.HOST}:${CONFIG.PORT}`);
-  promptUser();
-});
-
-client.on("data", (data) => {
-  const hexData = data.toString("hex");
-  // 处理SQL查询接收到的数据
-  if (hexData.slice(2, 4) === "02") {
-    processData(hexData);
-  }
-  promptUser();
-});
-
-client.on("close", () => {
-  console.log("Connection closed");
-  rl.close();
-});
-
-client.on("error", (err) => {
-  console.error("Connection error:", err);
-  rl.close();
-  process.exit(1);
-});
-
+// 使用示例
 /**
- * 提示用户输入命令
+ * 生成一个带有CRC校验码的数据包
+ *
+ * @param key 地址
+ * @param is FF00开关控制信号
+ * @returns 返回带有CRC校验码的数据包（十六进制字符串）
  */
-function promptUser() {
-  rl.question("> ", (cmd) => {
-    cmd = cmd.trim().toLowerCase();
-    if (cmd === "exit") {
-      client.destroy();
-      rl.close();
-    } else if (cmd.startsWith("data/")) {
-      const [_, cmdPart, key, is] = cmd.split("/");
-      sendCommand(cmdPart, key, is);
-    } else {
-      console.log('Invalid command. Use "data/cmd/key/value" or "exit"');
-      promptUser();
-    }
-  });
+function kz(key, is) {
+  console.log("key:", key);
+  console.log("is:", is);
+  const dataPacket = Buffer.from("010500" + key + is + "00", "hex");
+  const crc = crc16Modbus(dataPacket);
+  const finalPacket = Buffer.concat([dataPacket, crc]);
+  const crcValue = finalPacket.toString("hex").toUpperCase();
+  console.log("crcValue " + crcValue);
+  return crcValue;
 }
+
+// //定时器
+// let is=1
+// this.timer = setInterval(() => {
+//   if (clients.length > 0) {
+//     const firstClient0 = clients[0];
+//     const firstClient1 = clients[1];
+//     // is % 2 === 0?sendCommandToClient(firstClient0,'KZ','00','00'):sendCommandToClient(firstClient0,'KZ','00','FF');
+//     // is % 2 === 0?sendCommandToClient(firstClient0,'KZ','01','00'):sendCommandToClient(firstClient0,'KZ','01','FF');
+//     is % 2 === 0?sendCommandToClient(firstClient0,'KZ','02','00'):sendCommandToClient(firstClient0,'KZ','02','FF');
+//     // is % 2 === 0?sendCommandToClient(firstClient1,'KZ','00','00'):sendCommandToClient(firstClient1,'KZ','00','FF');
+//     // is % 2 === 0?sendCommandToClient(firstClient1,'KZ','01','00'):sendCommandToClient(firstClient1,'KZ','01','FF');
+//     is % 2 === 0?sendCommandToClient(firstClient1,'KZ','02','00'):sendCommandToClient(firstClient1,'KZ','02','FF');
+
+//     is++
+//   } else {
+//     console.error('No clients available');
+//   }
+
+// }, 500);
+this.timer = setInterval(() => {
+  const firstClient0 = clients[0];
+  const firstClient1 = clients[1];
+  sendCommandToClient(firstClient0, "SQL", "00", "00");
+  sendCommandToClient(firstClient1, "SQL", "00", "00");
+}, 2000);

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title></title>
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/http.js"></script>
+    <script>
+        var ws;
+        // const wsuri = "ws://192.168.199.137:8081/"; 
+        $().ready(function () {
+            $('#conn').click(function () {
+                //ws = new WebSocket('ws://' + window.location.hostname + ':' + window.location.port + '/Handler1.ashx?user=' + $("#user").val());
+                // ws = new WebSocket('ws://192.168.199.176:8080/Handler1.ashx?user=' + $("#user").val());
+
+                ws = new WebSocket("ws://10.90.7.240:8089/");
+
+                $('#msg').append('<p>正在连接——' + showtime() + '</p>');
+
+                ws.onopen = function () {
+                    $('#msg').append('<p>已经连接——' + showtime() + '</p>');
+                }
+                ws.onmessage = function (evt) {
+                    $('#msg').append('<p>' + evt.data + '——' + showtime() + '</p>');
+                }
+                ws.onerror = function (evt) {
+                    $('#msg').append('<p>' + JSON.stringify(evt) + '——' + showtime() + '</p>');
+                }
+                ws.onclose = function () {
+                    $('#msg').append('<p>已经关闭——' + showtime() + '</p>');
+                }
+            });
+
+            $('#close').click(function () {
+                ws.close();
+            });
+
+            $('#send').click(function () {
+                if (ws.readyState == WebSocket.OPEN) {
+                    ws.send($("#to").val() + ":" + $('#content').val());
+                } else {
+                    $('#tips').text('连接已经关闭');
+                }
+            });
+
+            function showtime() {
+                var mydate = new Date();
+                var str = "" + mydate.getFullYear() + "年";
+                str += (mydate.getMonth() + 1) + "月";
+                str += mydate.getDate() + "日";
+                str += mydate.getHours() + "时";
+                str += mydate.getMinutes() + "分";
+                str += mydate.getSeconds() + "秒";
+                return str;
+            }
+        });
+
+
+        var state, typeName
+
+        var lockReconnect = false; //避免ws重复连接
+        var ws = null; // 判断当前浏览器是否支持WebSocket
+        var wsUrl = ws1;
+        createWebSocket(wsUrl); //连接ws
+
+        function createWebSocket(url) {
+            try {
+                if ('WebSocket' in window) {
+                    ws = new WebSocket(url);
+                }
+                initEventHandle();
+            } catch (e) {
+                reconnect(url);
+                console.log(e);
+            }
+        }
+
+        function initEventHandle() {
+            ws.onclose = function () {
+                reconnect(wsUrl);
+                console.log("llws连接关闭!" + new Date().toLocaleString());
+            };
+            ws.onerror = function () {
+                reconnect(wsUrl);
+                console.log("llws连接错误!");
+            };
+            ws.onopen = function () {
+                heartCheck.reset().start(); //心跳检测重置
+                console.log("llws连接成功!" + new Date().toLocaleString());
+            };
+            ws.onmessage = function (event) { //如果获取到消息，心跳检测重置
+                heartCheck.reset().start(); //拿到任何消息都说明当前连接是正常的
+                console.log("llws收到消息啦:" + event.data);
+
+            };
+        }
+        // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function () {
+            ws.close();
+        }
+
+        function reconnect(url) {
+            if (lockReconnect) return;
+            lockReconnect = true;
+            setTimeout(function () { //没连接上会一直重连，设置延迟避免请求过多
+                createWebSocket(url);
+                lockReconnect = false;
+            }, 1000);
+        }
+
+        //心跳检测
+        var heartCheck = {
+            timeout: 5000, //1分钟发一次心跳
+            timeoutObj: null,
+            serverTimeoutObj: null,
+            reset: function () {
+                clearTimeout(this.timeoutObj);
+                clearTimeout(this.serverTimeoutObj);
+                return this;
+            },
+            start: function () {
+                var self = this;
+                this.timeoutObj = setTimeout(function () {
+                    //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                    //onmessage拿到返回的心跳就说明连接正常
+                    ws.send("ping");
+                    console.log("ping!" + new Date().toLocaleString())
+                    self.serverTimeoutObj = setTimeout(function () { //如果超过一定时间还没重置，说明后端主动断开了
+                        console.log(self.timeout + "-self.timeout/" + new Date().toLocaleString())
+                        ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                    }, self.timeout)
+                    console.log(this.timeout + "-this.timeout/" + new Date().toLocaleString())
+                }, this.timeout)
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div>
+        <input id="user" type="text" />
+        <input id="conn" type="button" value="连接" />
+        <input id="close" type="button" value="关闭" /><br />
+        <span id="tips"></span>
+        <input id="content" type="text" />
+        <input id="send" type="button" value="发送" /><br />
+        <input id="to" type="text" />目的用户
+        <div id="msg">
+        </div>
+    </div>
+</body>
+
+</html>
