@@ -1,5 +1,27 @@
 {
   "dependencies": {
-    "cors": "^2.8.5"
-  }
+    "cors": "^2.8.5",
+    "ws": "^8.18.2"
+  },
+  "name": "--agv----",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000-\u0000W\u0000M\u0000S\u0000\r\u0000 \u0000",
+  "main": "light_control_client.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhf646/--AGV----.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhf646/--AGV----/issues"
+  },
+  "homepage": "https://github.com/jhf646/--AGV----#readme"
 }

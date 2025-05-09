@@ -71,6 +71,7 @@ function createCommandPacket(key, is) {
   const dataPacket = Buffer.from(`010500${key}${is}00`, "hex");
   const crc = crc16Modbus(dataPacket);
   return Buffer.concat([dataPacket, crc]).toString("hex").toUpperCase();
+
 }
 
 /**
