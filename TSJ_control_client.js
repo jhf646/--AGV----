@@ -22,7 +22,7 @@ wss.on("connection", (ws) => {
  * @param addr TCP连接地址
  * @param data 接收到的数据
  */
-function receiveTcpData(addr,data) {
+function receiveTcpData(addr, data) {
   const message = `${addr}:${data}`;
   console.log(message);
   tcpDataQueue.push(message); // 存储数据
@@ -65,7 +65,7 @@ function crc16Modbus(buffer) {
  * @param hexString 十六进制字符串
  * @returns 返回二进制数组
  */
-function processData(addr,hexString) {
+function processData(addr, hexString) {
   // 提取出d1部分
   const targetHex = hexString.slice(6, 8); // 假设d1始终位于索引6到8（不包括8）
   console.log(`Extracted Hex: ${targetHex}`);
@@ -78,13 +78,13 @@ function processData(addr,hexString) {
   const binaryArray = Array.from(binaryString, (bit) => parseInt(bit, 10));
   console.log(`Binary Array: [${binaryArray.join(", ")}]`);
 
-  receiveTcpData(addr,binaryArray);
+  receiveTcpData(addr, binaryArray);
   return binaryArray;
 }
 // 配置连接参数
 const clientConfigs = [
-  { host: "10.90.7.222", port: 23 },
-  { host: "10.90.7.221", port: 23 }, // 假设这是另一个服务器的地址和端口
+  { host: "10.90.7.210", port: 2000 },//卷帘门
+  { host: "10.90.7.212", port: 2000 }, // 提升机
   // 可以根据需要添加更多的客户端配置
 ];
 
@@ -105,7 +105,7 @@ clientConfigs.forEach((config) => {
   client.on("data", (data) => {
     let targetHex = data.toString("hex").slice(2, 4); // 假设处理逻辑不变
     if (targetHex === "02") {
-      processData(config.host,data.toString("hex"));
+      processData(config.host, data.toString("hex"));
     }
     console.log(
       `Received from device at ${config.host}:${config.port}:`,
@@ -140,20 +140,23 @@ function sendCommandToClient(clientInstance, cmd, key, is) {
     case "KZ":
       command = Buffer.from(kz(key, is), "hex");
       break;
-    case "SQL":
-      command = Buffer.from("0102000000187800", "hex");
+    case "JLMSQL":
+      command = Buffer.from("01030085000195E3", "hex");
+      break;
+    case "TSJSQL":
+      command = Buffer.from("00AA005500010000000000000000000000AA0055", "hex");
       break;
     default:
       console.error("Unknown command:", cmd);
       return;
   }
 
-  console.log(
-    `Sending ${cmd.toUpperCase()} command to ${clientInstance.config.host}:${
-      clientInstance.config.port
-    }:`,
-    command.toString("hex")
-  );
+  // console.log(
+  //   `Sending ${cmd.toUpperCase()} command to ${clientInstance.config.host}:${
+  //     clientInstance.config.port
+  //   }:`,
+  command.toString("hex");
+  // );
   clientInstance.client.write(command);
 }
 
@@ -198,6 +201,7 @@ function kz(key, is) {
 this.timer = setInterval(() => {
   const firstClient0 = clients[0];
   const firstClient1 = clients[1];
-  sendCommandToClient(firstClient0, "SQL", "00", "00");
-  sendCommandToClient(firstClient1, "SQL", "00", "00");
+  sendCommandToClient(firstClient0, "JLMSQL", "00", "00");
+  sendCommandToClient(firstClient1, "TSJSQL", "00", "00");
+  // sendCommandToClient(firstClient1, "SQL", "00", "00");
 }, 2000);

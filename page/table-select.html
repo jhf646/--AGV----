@@ -89,8 +89,14 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">执行编号：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
-                                    id="taskTyp" value="CE1000" readonly>
+                                <select id="taskTyp" name="taskTyp">
+                                    <option value="CE10001" selected="">点对点搬运任务</option>
+                                    <option value="YD1000">点对点移动</option>
+                                    <option value="CE1000">搬运-移动-搬运任务集合</option>
+
+                                </select>
+                                <!-- <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="taskTyp" value="CE10001" readonly> -->
                             </div>
                             <div class="layui-form-mid layui-word-aux">执行编号就是任务动作类型编号</div>
                         </div>
@@ -98,17 +104,134 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">起始位：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
-                                    id="start">
+                                <!-- <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="start"> -->
+
+                                <select id="start" name="start">
+                                    <option value="Z1" selected="">一楼工作台Z1</option>
+                                    <option value="Z2">一楼工作台Z2</option>
+                                    <option value="Z3">一楼工作台Z3</option>
+                                    <option value="Z4">一楼工作台Z4</option>
+                                    <option value="Z5">二楼工作台Z5</option>
+                                    <option value="Z6">二楼工作台Z6</option>
+                                    <option value="Z7">二楼工作台Z7</option>
+                                    <option value="Z8">二楼工作台Z8</option>
+                                    <option value="B1">一楼旋转位B1</option>
+                                    <option value="B2">一楼旋转位B2</option>
+                                    <option value="B3">一楼旋转位B3</option>
+                                    <option value="B4">一楼旋转位B4</option>
+                                    <option value="B5">二楼旋转位B5</option>
+                                    <option value="B6">二楼旋转位B6</option>
+                                    <option value="B7">二楼旋转位B7</option>
+                                    <option value="B8">二楼旋转位B8</option>
+                                    <option value="C1">一楼电梯口C1</option>
+                                    <option value="C2">二楼电梯口C2</option>
+                                    <option value="D1">电梯桥箱位D1</option>
+                                    <option value="XX1">一楼暂住位XX1</option>
+                                    <option value="XX2">一楼暂住位XX2</option>
+                                    <option value="XX3">二楼暂住位XX3</option>
+                                    <option value="XX4">二楼暂住位XX4</option>
+                                </select>
                             </div>
                             <div class="layui-form-mid layui-word-aux"></div>
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">目的地：</label>
+                            <label class="layui-form-label">目的地1：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
-                                    id="end">
+                                <!-- <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="end"> -->
+                                    <select id="end" name="end">
+                                        <option value="Z1" selected="">一楼工作台Z1</option>
+                                        <option value="Z2">一楼工作台Z2</option>
+                                        <option value="Z3">一楼工作台Z3</option>
+                                        <option value="Z4">一楼工作台Z4</option>
+                                        <option value="Z5">二楼工作台Z5</option>
+                                        <option value="Z6">二楼工作台Z6</option>
+                                        <option value="Z7">二楼工作台Z7</option>
+                                        <option value="Z8">二楼工作台Z8</option>
+                                        <option value="B1">一楼旋转位B1</option>
+                                        <option value="B2">一楼旋转位B2</option>
+                                        <option value="B3">一楼旋转位B3</option>
+                                        <option value="B4">一楼旋转位B4</option>
+                                        <option value="B5">二楼旋转位B5</option>
+                                        <option value="B6">二楼旋转位B6</option>
+                                        <option value="B7">二楼旋转位B7</option>
+                                        <option value="B8">二楼旋转位B8</option>
+                                        <option value="C1">一楼电梯口C1</option>
+                                        <option value="C2">二楼电梯口C2</option>
+                                        <option value="D1">电梯桥箱位D1</option>
+                                        <option value="XX1">一楼暂住位XX1</option>
+                                        <option value="XX2">一楼暂住位XX2</option>
+                                        <option value="XX3">二楼暂住位XX3</option>
+                                        <option value="XX4">二楼暂住位XX4</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">目的地2：</label>
+                            <div class="layui-input-inline">
+                                <!-- <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="end"> -->
+                                    <select id="step3" name="step3">
+                                        <option value="Z1" selected="">一楼工作台Z1</option>
+                                        <option value="Z2">一楼工作台Z2</option>
+                                        <option value="Z3">一楼工作台Z3</option>
+                                        <option value="Z4">一楼工作台Z4</option>
+                                        <option value="Z5">二楼工作台Z5</option>
+                                        <option value="Z6">二楼工作台Z6</option>
+                                        <option value="Z7">二楼工作台Z7</option>
+                                        <option value="Z8">二楼工作台Z8</option>
+                                        <option value="B1">一楼旋转位B1</option>
+                                        <option value="B2">一楼旋转位B2</option>
+                                        <option value="B3">一楼旋转位B3</option>
+                                        <option value="B4">一楼旋转位B4</option>
+                                        <option value="B5">二楼旋转位B5</option>
+                                        <option value="B6">二楼旋转位B6</option>
+                                        <option value="B7">二楼旋转位B7</option>
+                                        <option value="B8">二楼旋转位B8</option>
+                                        <option value="C1">一楼电梯口C1</option>
+                                        <option value="C2">二楼电梯口C2</option>
+                                        <option value="D1">电梯桥箱位D1</option>
+                                        <option value="XX1">一楼暂住位XX1</option>
+                                        <option value="XX2">一楼暂住位XX2</option>
+                                        <option value="XX3">二楼暂住位XX3</option>
+                                        <option value="XX4">二楼暂住位XX4</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">目的地3：</label>
+                            <div class="layui-input-inline">
+                                <!-- <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"
+                                    id="end"> -->
+                                    <select id="step4" name="step4">
+                                        <option value="Z1" selected="">一楼工作台Z1</option>
+                                        <option value="Z2">一楼工作台Z2</option>
+                                        <option value="Z3">一楼工作台Z3</option>
+                                        <option value="Z4">一楼工作台Z4</option>
+                                        <option value="Z5">二楼工作台Z5</option>
+                                        <option value="Z6">二楼工作台Z6</option>
+                                        <option value="Z7">二楼工作台Z7</option>
+                                        <option value="Z8">二楼工作台Z8</option>
+                                        <option value="B1">一楼旋转位B1</option>
+                                        <option value="B2">一楼旋转位B2</option>
+                                        <option value="B3">一楼旋转位B3</option>
+                                        <option value="B4">一楼旋转位B4</option>
+                                        <option value="B5">二楼旋转位B5</option>
+                                        <option value="B6">二楼旋转位B6</option>
+                                        <option value="B7">二楼旋转位B7</option>
+                                        <option value="B8">二楼旋转位B8</option>
+                                        <option value="C1">一楼电梯口C1</option>
+                                        <option value="C2">二楼电梯口C2</option>
+                                        <option value="D1">电梯桥箱位D1</option>
+                                        <option value="XX1">一楼暂住位XX1</option>
+                                        <option value="XX2">一楼暂住位XX2</option>
+                                        <option value="XX3">二楼暂住位XX3</option>
+                                        <option value="XX4">二楼暂住位XX4</option>
+                                    </select>
                             </div>
                         </div>
 
@@ -384,7 +507,7 @@
 
                 $.ajax({
                     // url: "http://192.168.0.144:80/rcs/services/rest/hikRpcService/getAgvStatus",
-                    url: "http://192.168.0.250:8995/getAgvStatus/3005",
+                    url: "http://10.90.7.77:8995/getAgvStatus/3005",
 
 
                     "method": "POST",
@@ -450,7 +573,7 @@
 
                 $.ajax({
                     // url: "http://192.168.0.144:80/rcs/services/rest/hikRpcService/getAgvStatus",
-                    url: "http://192.168.0.250:8995/getAgvStatus/3005",
+                    url: "http://10.90.7.77:8995/getAgvStatus/3005",
 
 
                     "method": "POST",
@@ -567,7 +690,7 @@
                 })
 
                 // var settings = {
-                //     "url": "http://192.168.0.250:8995/getAgvStatus/3005",
+                //     "url": "http://10.90.7.77:8995/getAgvStatus/3005",
                 //     "method": "POST",
                 //     "timeout": 0,
                 //     "headers": {
@@ -631,11 +754,11 @@
                 // console.log("当前时间戳:", timestamp);
 
 
-                let A= (H%2==0)? "004000XY002000":"001000XY002000"
+                let A = (H % 2 == 0) ? "004000XY002000" : "001000XY002000"
 
-                let B= (H%2==0)? "001000XY002000":"004000XY002000"
+                let B = (H % 2 == 0) ? "001000XY002000" : "004000XY002000"
 
-               
+
 
 
                 var data1 = {
@@ -648,7 +771,7 @@
                     "wbCode": "",
                     "positionCodePath": [
                         {
-                            
+
                             // "positionCode": $("#start").val(),
                             "positionCode": A,
                             "type": "00"
@@ -669,7 +792,7 @@
 
 
                 var settings = {
-                    "url": "http://192.168.0.250:8995/genAgvSchedulingTask/3005",
+                    "url": "http://10.90.7.77:8995/genAgvSchedulingTask/3005",
                     "method": "POST",
                     "timeout": 0,
                     "headers": {
@@ -707,7 +830,7 @@
                     "clientCode": "",
                     "tokenCode": "",
                     "interfaceName": "genAgvSchedulingTask",
-                    "taskTyp": "CE1000",
+                    "taskTyp": $("#taskTyp").val(),
                     "wbCode": "",
                     "positionCodePath": [
                         {
@@ -716,6 +839,14 @@
                         },
                         {
                             "positionCode": $("#end").val(),
+                            "type": "00"
+                        },
+                        {
+                            "positionCode": $("#step3").val(),
+                            "type": "00"
+                        },
+                        {
+                            "positionCode": $("#step4").val(),
                             "type": "00"
                         }
                     ],
@@ -728,7 +859,7 @@
 
 
                 var settings = {
-                    "url": "http://192.168.0.250:8995/genAgvSchedulingTask/3005",
+                    "url": "http://10.90.7.77:8995/genAgvSchedulingTask/3005",
                     "method": "POST",
                     "timeout": 0,
                     "headers": {
@@ -739,7 +870,7 @@
 
                 $.ajax(settings).done(function (response) {
 
-                    layer.msg(response, {
+                    layer.msg(response.message, {
                         icon: 1,
                         offset: "auto",
                         time: 2000

@@ -339,6 +339,7 @@
             background-repeat: no-repeat;
             background-position: 50% 50%;
         }
+
         .layui-bg-number:hover {
             background: #73d5ee;
         }
@@ -349,80 +350,71 @@
     <div class="layuimini-container">
         <div class="layuimini-main">
             <div class="layui-row layui-col-space15">
-                <div class="layui-col-md8">
-                    <div class="layui-row layui-col-space15">
 
-                        <div class="layui-col-md12">
-                            <div class="layui-card">
-                                <div class="layui-card-header">
-                                    <i class="fa fa-line-chart icon"></i>
-                                    <!-- 德慧DFMS智能制造系统 -->
-                                    工件列表
-                                    <!-- <span id="ztt">ROB状态: <span id="ztnr"></span></span> -->
-                                    <button data-method="setTop" class="layui-btn btn-sz cc_pointer">工件设定</button>
-                                </div>
-                                <div class="layui-card-body">
-                                    <div id="echarts-records" style="width: 100%;">
-                                        <div id="Pallet" class="layui-row layui-col-space10">
-                                            <!-- 无托盘 -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="layui-col-md4">
+                <div class="layui-col-md6">
                     <div class="layui-row layui-col-space15">
                         <div class="layui-col-md12">
-                            <div class="layui-card">
-                                <div class="layui-card-header"><i class="fa fa-fire icon cc_cursor"></i>工件统计</div>
-                                <div class="layui-card-body" style="width: 100%;">
 
-                                    <div id="echarts-pies"
-                                        style="background-color:#ffffff;min-height:200px;padding: 10px"></div>
-
-                                </div>
-                            </div>
                             <div class="layui-card">
-                                <div class="layui-card-header"><i class="fa fa-fire icon"></i>工件信息</div>
+                                <div class="layui-card-header"><i class="fa fa-fire icon"></i>10.90.7.221状态信息</div>
                                 <div class="layui-card-body layui-text">
                                     <table class="layui-table">
                                         <colgroup>
                                             <col width="100">
                                             <col>
                                         </colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <td>工件名称</td>
-                                                <td>
-                                                    精密
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>工件工序</td>
-                                                <td>OP10,OP20,OP30</td>
-                                            </tr>
-                                            <tr>
-                                                <td>工件总数</td>
-                                                <td>10</td>
-                                            </tr>
-                                            <tr>
-                                                <td>工件订单</td>
-                                                <td>
-                                                    1020666622
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>工件使用托盘数</td>
-                                                <td>
-                                                    9
-                                                </td>
-                                            </tr>
+                                        <tbody id="d1">
+                                           
 
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md12">
+
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="fa fa-fire icon"></i>10.90.7.222状态信息</div>
+                                <div class="layui-card-body layui-text">
+                                    <table class="layui-table">
+                                        <colgroup>
+                                            <col width="100">
+                                            <col>
+                                        </colgroup>
+                                        <tbody id="d2">
+                                          
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-col-md12">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md12">
+
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="fa fa-fire icon"></i>socket信息 <input id="user"
+                                        type="text" value="ws://10.90.7.240:8089/" />
+                                    <input id="conn" type="button" value="连接" />
+                                    <input id="close" type="button" value="关闭" />
+                                    <span id="tips"></span>
+                                    <input id="content" type="text" />
+                                    <input id="send" type="button" value="发送" />
+                                    <input id="to" type="text" />目的用户
+                                </div>
+                                <div id="msg" class="layui-card-body layui-text">
+
                                 </div>
                             </div>
                         </div>
@@ -443,151 +435,152 @@
             var $ = layui.jquery,
                 layer = layui.layer,
                 form = layui.form,
-                layuimini = layui.layuimini,
                 echarts = layui.echarts;
+            var ws;
+            const ws1 = "ws://10.90.7.240:8089/"; 
+            $().ready(function () {
+                $('#conn').click(function () {
+                    //ws = new WebSocket('ws://' + window.location.hostname + ':' + window.location.port + '/Handler1.ashx?user=' + $("#user").val());
+                    // ws = new WebSocket('ws://192.168.199.176:8080/Handler1.ashx?user=' + $("#user").val());
 
-            var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'walden');
-            var optionPies = {
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b}: {c} ({d}%)'
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 10,
-                    data: ['完成率', '合格率', '不合格率']
-                },
-                series: [
-                    {
-                        name: '信息',
-                        type: 'pie',
-                        selectedMode: 'single',
-                        radius: [0, '30%'],
+                    ws = new WebSocket("ws://10.90.7.240:8089/");
 
-                        label: {
-                            position: 'inner'
-                        },
-                        labelLine: {
-                            show: false
-                        },
-                        data: [
-                            { value: 335, name: '完成率', selected: true },
-                            { value: 679, name: '合格率' },
-                            { value: 1548, name: '不合格率' }
-                        ]
-                    },
-                    {
-                        name: '信息',
-                        type: 'pie',
-                        radius: ['40%', '55%'],
-                        label: {
-                            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-                            backgroundColor: '#eee',
-                            borderColor: '#aaa',
-                            borderWidth: 1,
-                            borderRadius: 4,
-                            // shadowBlur:3,
-                            // shadowOffsetX: 2,
-                            // shadowOffsetY: 2,
-                            // shadowColor: '#999',
-                            // padding: [0, 7],
-                            rich: {
-                                a: {
-                                    color: '#999',
-                                    lineHeight: 22,
-                                    align: 'center'
-                                },
-                                // abg: {
-                                //     backgroundColor: '#333',
-                                //     width: '100%',
-                                //     align: 'right',
-                                //     height: 22,
-                                //     borderRadius: [4, 4, 0, 0]
-                                // },
-                                hr: {
-                                    borderColor: '#aaa',
-                                    width: '100%',
-                                    borderWidth: 0.5,
-                                    height: 0
-                                },
-                                b: {
-                                    fontSize: 16,
-                                    lineHeight: 33
-                                },
-                                per: {
-                                    color: '#eee',
-                                    backgroundColor: '#334455',
-                                    padding: [2, 4],
-                                    borderRadius: 2
-                                }
-                            }
-                        },
-                        data: [
-                            { value: 335, name: '完成率' },
-                            { value: 679, name: '合格率' },
-                            { value: 1548, name: '不合格率' }
-                        ]
+                    $('#msg').prepend('<p>正在连接——' + showtime() + '</p>');
+
+                    ws.onopen = function () {
+                        $('#msg').prepend('<p>已经连接——' + showtime() + '</p>');
                     }
-                ]
-            };
-            echartsPies.setOption(optionPies);
+                    ws.onmessage = function (evt) {
+ 
 
+                        // 提取数据部分并转换为数组
+                        let rawid = evt.data.split(':')[0]=="10.90.7.221"?"d1":"d2";
+                        let rawData = evt.data.split(':')[1];
+                        let dataArray = rawData.split(',').reverse(); // 倒序
+                        let predefinedData = ["工作站1的STOP1", "工作站1的呼叫按钮", "工作站1的托盘感应1", "工作站1的托盘感应2", "工作站2的STOP2", "工作站2的呼叫按钮", "工作站2的托盘感应1", "工作站2的托盘感应2"]; // 预定义数据
 
-            //工件信息
-            $("body").on("click", ".panel-body", function () {
-                var state1 = $(this).children('.panel-title').children("h5").text(),
-                    danhao = $(this).children('.panel-content').children(".no-margins").text();
-                console.log(this)
-                console.log($(this))
-                console.log($(this).children('.panel-title').children("h5").text())
-                console.log($(this).children('.panel-content').children(".no-margins").text())
-                console.log(state1)
-                console.log(danhao)
-                // content1 = $(this).children(h5).html();
-                var index = layer.open({
-                    title: state1 + " 绑定表(工序默认为1)",
-                    type: 2,
-                    shade: 0.2,
-                    maxmin: true,
-                    shadeClose: true,
-                    btn: ['确定', '关闭'],
-                    area: ['60%', '82%'],
-                    content: '/page/table/Work_bind.html',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
+                        // 生成表格 HTML
+                        let tableHtml = ``;
+                        for (let i = 0; i < dataArray.length; i++) {
+                            tableHtml += `<tr><td>${predefinedData[i]}</td><td>${dataArray[i]}</td><td>${dataArray[i]=="0"?"常开状态":"常闭状态"}</td></tr>`;
+                        }
+                        $("#"+rawid).html()
+                        $("#"+rawid).html(tableHtml)
+                
+                        // 将表格添加到页面中（假设添加到 #msg 元素内）
+                        $('#msg').prepend(evt.data + '——' + showtime()+ '</p>'); // showtime() 函数需提前定义
+                    }
+                    ws.onerror = function (evt) {
+                        $('#msg').prepend('<p>' + JSON.stringify(evt) + '——' + showtime() + '</p>');
+                    }
+                    ws.onclose = function () {
+                        $('#msg').prepend('<p>已经关闭——' + showtime() + '</p>');
+                    }
                 });
 
-                return false;
-            });
-            // echarts 窗口缩放自适应
-            window.onresize = function () {
-                echartsRecords.resize();
-            };
-            //工件
-            layer.ready(function () {
-                let html = ""
-                $("#Pallet").html("")
-                for (var i = 1; i <= 20; i++) {
-                    html = `<div class="layui-col-xs3">
-                                                <div class="panel layui-bg-number">
-                                                    <div class="panel-body">
-                                                        <div class="panel-title">
-                                                            <span class="label pull-right layui-bg-gray">空闲</span>
-                                                            <h5>工件名称：${i}</h5>
-                                                        </div>
-                                                        <div class="panel-content">
-                                                            <small>绑定托盘:</small>
-                                                            <h2 class="no-margins">无绑定</h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>`
-                    $("#Pallet").append(html);
-                    //把html 添加到父级元素下 
-                    html = ""
+                $('#close').click(function () {
+                    ws.close();
+                });
+
+                $('#send').click(function () {
+                    if (ws.readyState == WebSocket.OPEN) {
+                        ws.send($("#to").val() + ":" + $('#content').val());
+                    } else {
+                        $('#tips').text('连接已经关闭');
+                    }
+                });
+
+                function showtime() {
+                    var mydate = new Date();
+                    var str = "" + mydate.getFullYear() + "年";
+                    str += (mydate.getMonth() + 1) + "月";
+                    str += mydate.getDate() + "日   ";
+                    str += mydate.getHours() + ":";
+                    str += mydate.getMinutes() + " ";
+                    str += mydate.getSeconds() + "秒";
+                    return str;
                 }
             });
+
+
+            var state, typeName
+
+            var lockReconnect = false; //避免ws重复连接
+            var ws = null; // 判断当前浏览器是否支持WebSocket
+            var wsUrl = ws1;
+            createWebSocket(wsUrl); //连接ws
+
+            function createWebSocket(url) {
+                try {
+                    if ('WebSocket' in window) {
+                        ws = new WebSocket(url);
+                    }
+                    initEventHandle();
+                } catch (e) {
+                    reconnect(url);
+                    console.log(e);
+                }
+            }
+
+            function initEventHandle() {
+                ws.onclose = function () {
+                    reconnect(wsUrl);
+                    console.log("llws连接关闭!" + new Date().toLocaleString());
+                };
+                ws.onerror = function () {
+                    reconnect(wsUrl);
+                    console.log("llws连接错误!");
+                };
+                ws.onopen = function () {
+                    heartCheck.reset().start(); //心跳检测重置
+                    console.log("llws连接成功!" + new Date().toLocaleString());
+                };
+                ws.onmessage = function (event) { //如果获取到消息，心跳检测重置
+                    heartCheck.reset().start(); //拿到任何消息都说明当前连接是正常的
+                    console.log("llws收到消息啦:" + event.data);
+
+                };
+            }
+            // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+            window.onbeforeunload = function () {
+                ws.close();
+            }
+
+            function reconnect(url) {
+                if (lockReconnect) return;
+                lockReconnect = true;
+                setTimeout(function () { //没连接上会一直重连，设置延迟避免请求过多
+                    createWebSocket(url);
+                    lockReconnect = false;
+                }, 1000);
+            }
+
+            //心跳检测
+            var heartCheck = {
+                timeout: 5000, //1分钟发一次心跳
+                timeoutObj: null,
+                serverTimeoutObj: null,
+                reset: function () {
+                    clearTimeout(this.timeoutObj);
+                    clearTimeout(this.serverTimeoutObj);
+                    return this;
+                },
+                start: function () {
+                    var self = this;
+                    this.timeoutObj = setTimeout(function () {
+                        //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                        //onmessage拿到返回的心跳就说明连接正常
+                        ws.send("ping");
+                        console.log("ping!" + new Date().toLocaleString())
+                        self.serverTimeoutObj = setTimeout(function () { //如果超过一定时间还没重置，说明后端主动断开了
+                            console.log(self.timeout + "-self.timeout/" + new Date().toLocaleString())
+                            ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                        }, self.timeout)
+                        console.log(this.timeout + "-this.timeout/" + new Date().toLocaleString())
+                    }, this.timeout)
+                }
+            }
+
         });
     </script>
 </body>
